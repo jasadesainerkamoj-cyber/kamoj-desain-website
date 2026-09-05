@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KamOj Desain — Desain Grafis, Timika</title>
+<meta name="description" content="Jasa desain grafis di Timika: poster, company profile, merchandise, dan desain kaos. Lihat dan pesan karya KamOj Desain langsung via WhatsApp.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:        #0d0d0d;
+    --surface:   #161514;
+    --line:      #3a2f2d;
+    --red:       #c81d25;
+    --red-dark:  #7a1315;
+    --ink:       #ede8e2;
+    --muted:     #948d87;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.55;
+  }
+
+  a{ color: inherit; }
+  img{ max-width:100%; display:block; }
+
+  :focus-visible{
+    outline: 2px solid var(--red);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  h1, h2, h3{
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+
+  .meta{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  /* ---------- header ---------- */
+  header{
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(6px);
+    z-index: 10;
+  }
+  .header-inner{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 18px 0;
+    gap: 16px;
+  }
+  .brand{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    line-height:1;
+  }
+  .brand span{ color: var(--red); }
+  nav{ display:flex; gap: 22px; align-items:center; }
+  nav a{
+    text-decoration:none;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+  nav a:hover{ color: var(--ink); }
+  .nav-phone{
+    font-family:'IBM Plex Mono', monospace;
+    color: var(--ink) !important;
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+  }
+  @media (max-width: 620px){
+    nav a:not(.nav-phone){ display:none; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding: 96px 0 72px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    right: -10%;
+    top: 0;
+    bottom: 0;
+    width: 45%;
+    background:
+      repeating-linear-gradient(180deg, var(--line) 0, var(--line) 1px, transparent 1px, transparent 64px),
+      repeating-linear-gradient(90deg, var(--line) 0, var(--line) 1px, transparent 1px, transparent 64px);
+    opacity: 0.35;
+    mask-image: linear-gradient(90deg, transparent, black 40%);
+  }
+  .hero-inner{ position:relative; max-width: 640px; }
+  .hero h1{
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 0.98;
+  }
+  .hero .rule{
+    width: 72px;
+    height: 6px;
+    background: var(--red);
+    margin: 22px 0;
+  }
+  .hero p{
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 46ch;
+  }
+  .cta-row{
+    margin-top: 34px;
+    display:flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding: 13px 22px;
+    text-decoration:none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: 1px solid var(--line);
+  }
+  .btn-primary{
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
+  .btn-primary:hover{ background: var(--red-dark); border-color: var(--red-dark); }
+  .btn-ghost:hover{ border-color: var(--ink); }
+
+  /* ---------- section shell ---------- */
+  section{ padding: 72px 0; border-bottom: 1px solid var(--line); }
+  .section-head{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .section-head h2{ font-size: clamp(1.8rem, 4vw, 2.6rem); }
+  .section-head p{ color: var(--muted); max-width: 40ch; margin: 0; }
+
+  /* ---------- tentang ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+  }
+  @media (max-width: 760px){ .about-grid{ grid-template-columns: 1fr; } }
+  .about-grid p{ color: var(--muted); }
+  .about-list{ list-style:none; margin:0; padding:0; }
+  .about-list li{
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    display:flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.95rem;
+  }
+  .about-list li:last-child{ border-bottom: 1px solid var(--line); }
+  .about-list .tag{ color: var(--red); font-family:'IBM Plex Mono', monospace; font-size: 0.78rem; }
+
+  /* ---------- galeri ---------- */
+  .gallery{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 28px;
+  }
+  .card{
+    border: 1px solid var(--line);
+    background: var(--surface);
+    display:flex;
+    flex-direction: column;
+  }
+  .card-media{
+    aspect-ratio: 4/3;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    background: #1c1a19;
+    overflow:hidden;
+  }
+  .card-media img{ width:100%; height:100%; object-fit: cover; }
+  .card-media .corner{
+    position:absolute; width:14px; height:14px;
+    border: 2px solid var(--red);
+  }
+  .corner.tl{ top:8px; left:8px; border-right:none; border-bottom:none; }
+  .corner.br{ bottom:8px; right:8px; border-left:none; border-top:none; }
+  .card-body{ padding: 18px 20px 20px; display:flex; flex-direction:column; gap: 10px; flex:1; }
+  .card-body h3{ font-size: 1.15rem; font-weight: 700; }
+  .card-spec{ color: var(--muted); font-size: 0.88rem; }
+  .card-foot{
+    margin-top: auto;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .card-price{ font-family:'IBM Plex Mono', monospace; font-size: 0.95rem; }
+  .card-order{
+    font-size: 0.85rem;
+    text-decoration:none;
+    color: var(--red);
+    border-bottom: 1px solid var(--red);
+    padding-bottom: 1px;
+  }
+  .card-order:hover{ color: var(--ink); border-color: var(--ink); }
+
+  /* ---------- cara pesan ---------- */
+  .steps{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  @media (max-width: 760px){ .steps{ grid-template-columns: 1fr; } }
+  .step{
+    padding: 28px 26px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .step .n{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    color: var(--red);
+    line-height:1;
+  }
+  .step h3{ font-size: 1.05rem; font-weight:600; margin-top: 10px; }
+  .step p{ color: var(--muted); font-size: 0.92rem; margin: 8px 0 0; }
+
+  /* ---------- footer ---------- */
+  footer{ padding: 48px 0; }
+  .foot-inner{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .foot-inner .meta{ font-size: 0.8rem; }
+
+  /* ---------- modal tambah karya ---------- */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .modal-content {
+    background-color: var(--surface);
+    margin: 5% auto;
+    padding: 30px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .close {
+    color: var(--muted);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover {
+    color: var(--ink);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    border-radius: 4px;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .btn-submit {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .btn-submit:hover {
+    background: var(--red-dark);
+    border-color: var(--red-dark);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-inner">
+    <div class="brand">KAM<span>OJ</span> DESAIN</div>
+    <nav>
+      <a href="#tentang">Tentang</a>
+      <a href="#karya">Karya</a>
+      <a href="#pesan">Cara pesan</a>
+      <a class="nav-phone" href="https://wa.me/628134595671" target="_blank" rel="noopener">0813-4595-671</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <h1>Desain grafis,<br>dikerjakan dari Timika.</h1>
+    <div class="rule"></div>
+    <p>Poster, company profile, merchandise, dan desain kaos — dikerjakan cepat dan siap cetak. Kirim kebutuhanmu lewat WhatsApp, terima file jadi hari itu juga.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#karya">Lihat karya</a>
+      <a class="btn btn-ghost" href="https://wa.me/628134595671" target="_blank" rel="noopener">Pesan via WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<section id="tentang">
+  <div class="wrap about-grid">
+    <div>
+      <div class="section-head" style="margin-bottom:20px;">
+        <h2>Tentang KamOj Desain</h2>
+      </div>
+      <p>KamOj Desain mengerjakan kebutuhan desain grafis — dari materi promosi, company profile, poster rekrutmen, sampai desain merchandise dan kaos. Cocok untuk usaha kecil, toko, atau komunitas yang butuh desain rapi tanpa proses ribet.</p>
+      <p>Berbasis di Timika, pengerjaan dan pemesanan langsung lewat WhatsApp.</p>
+    </div>
+    <ul class="about-list">
+      <li><span>Poster & materi promosi</span><span class="tag">DESAIN</span></li>
+      <li><span>Company profile & profil usaha</span><span class="tag">PROFIL</span></li>
+      <li><span>Desain kaos & merchandise</span><span class="tag">MERCH</span></li>
+      <li><span>Revisi cepat, file siap cetak</span><span class="tag">FILE</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="karya">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Karya kami</h2>
+      <p>Contoh hasil desain. Tiap karya bisa dipesan langsung lewat WhatsApp.</p>
+    </div>
+    <button class="btn btn-primary" onclick="openModal()" style="margin-bottom: 30px;">+ Tambah Karya Baru</button>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<section id="pesan">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Cara pesan</h2>
+      <p>Tiga langkah, selesai lewat WhatsApp.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>Pilih desain</h3>
+        <p>Lihat karya di atas, atau ceritakan kebutuhanmu langsung.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>Chat WhatsApp</h3>
+        <p>Sampaikan detail desain yang kamu butuhkan lewat WhatsApp.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>Bayar & terima file</h3>
+        <p>Setelah pembayaran, file gambar dikirim langsung ke WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="meta">© 2026 KAMOJ DESAIN — Timika</div>
+    <div class="meta">WA 0813-4595-671</div>
+  </div>
+</footer>
+
+<!-- Modal untuk tambah karya -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 style="margin-top: 0;">Tambah Karya Baru</h2>
+    <form onsubmit="tambahKarya(event)">
+      <div class="form-group">
+        <label for="judul">Judul Karya</label>
+        <input type="text" id="judul" placeholder="Contoh: Desain Kaos SATGAS" required>
+      </div>
+      <div class="form-group">
+        <label for="spek">Spesifikasi/Deskripsi</label>
+        <textarea id="spek" placeholder="Contoh: Desain grafis untuk sablon, siap pisah warna" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="harga">Harga</label>
+        <input type="text" id="harga" placeholder="Contoh: Rp50.000" required>
+      </div>
+      <div class="form-group">
+        <label for="gambar">URL Foto Karya</label>
+        <input type="url" id="gambar" placeholder="https://example.com/image.jpg (opsional)">
+      </div>
+      <div class="form-group">
+        <label for="wa">Nomor WhatsApp (opsional)</label>
+        <input type="text" id="wa" placeholder="Kosongkan untuk pakai nomor default (0813-4595-671)">
+      </div>
+      <button type="submit" class="btn btn-submit">Simpan Karya</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // ==========================================================================
+  // DATA KARYA - Disimpan di localStorage
+  // ==========================================================================
+  const DEFAULT_WA = "628134595671";
+
+  function loadKarya() {
+    const saved = localStorage.getItem('karyaList');
+    return saved ? JSON.parse(saved) : [
+      { gambar: "", judul: "Desain Kaos SATGAS", spek: "Desain grafis untuk sablon, siap pisah warna", harga: "Rp50.000", wa: "" },
+      { gambar: "", judul: "Materi Promo Produk", spek: "Poster & materi promosi ukuran cetak", harga: "Rp50.000", wa: "" },
+      { gambar: "", judul: "Company Profile", spek: "Desain profil usaha untuk proposal & presentasi", harga: "Rp150.000", wa: "" },
+      { gambar: "", judul: "Poster Rekrutmen", spek: "Poster lowongan kerja siap posting", harga: "Rp50.000", wa: "" },
+    ];
+  }
+
+  function saveKarya(karya) {
+    localStorage.setItem('karyaList', JSON.stringify(karya));
+  }
+
+  function waLink(item){
+    const nomor = item.wa || DEFAULT_WA;
+    const pesan = encodeURIComponent(`Halo KamOj Desain, saya tertarik dengan "${item.judul}". Boleh info lebih lanjut?`);
+    return `https://wa.me/${nomor}?text=${pesan}`;
+  }
+
+  function renderGallery(){
+    const el = document.getElementById('gallery');
+    const karya = loadKarya();
+    el.innerHTML = karya.map((item, index) => `
+      <div class="card">
+        <div class="card-media">
+          ${item.gambar
+            ? `<img src="${item.gambar}" alt="${item.judul}" loading="lazy">`
+            : `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:0.9rem;">Foto belum ditambahkan</div>`}
+          <div class="corner tl"></div>
+          <div class="corner br"></div>
+        </div>
+        <div class="card-body">
+          <h3>${item.judul}</h3>
+          <div class="card-spec">${item.spek}</div>
+          <div class="card-foot">
+            <span class="card-price">${item.harga}</span>
+            <a class="card-order" href="${waLink(item)}" target="_blank" rel="noopener">Pesan →</a>
+          </div>
+        </div>
+        <div style="padding: 10px 20px; border-top: 1px solid var(--line); display: flex; gap: 10px;">
+          <button onclick="editKarya(${index})" style="flex:1; padding:8px; background:var(--red); color:#fff; border:none; border-radius:4px; cursor:pointer;">Edit</button>
+          <button onclick="deleteKarya(${index})" style="flex:1; padding:8px; background:#555; color:#fff; border:none; border-radius:4px; cursor:pointer;">Hapus</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function openModal() {
+    document.getElementById('modal').style.display = 'block';
+    document.getElementById('judul').value = '';
+    document.getElementById('spek').value = '';
+    document.getElementById('harga').value = '';
+    document.getElementById('gambar').value = '';
+    document.getElementById('wa').value = '';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+  }
+
+  function tambahKarya(event) {
+    event.preventDefault();
+    const karya = loadKarya();
+    karya.push({
+      gambar: document.getElementById('gambar').value,
+      judul: document.getElementById('judul').value,
+      spek: document.getElementById('spek').value,
+      harga: document.getElementById('harga').value,
+      wa: document.getElementById('wa').value
+    });
+    saveKarya(karya);
+    renderGallery();
+    closeModal();
+    alert('Karya berhasil ditambahkan! 🎉');
+  }
+
+  function editKarya(index) {
+    const karya = loadKarya();
+    const item = karya[index];
+    document.getElementById('judul').value = item.judul;
+    document.getElementById('spek').value = item.spek;
+    document.getElementById('harga').value = item.harga;
+    document.getElementById('gambar').value = item.gambar;
+    document.getElementById('wa').value = item.wa;
+    deleteKarya(index);
+    openModal();
+  }
+
+  function deleteKarya(index) {
+    const karya = loadKarya();
+    karya.splice(index, 1);
+    saveKarya(karya);
+    renderGallery();
+  }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById('modal');
+    if (event.target == modal) {
+      closeModal();
+    }
+  }
+
+  renderGallery();
+</script>
+
+</body>
+</html>
