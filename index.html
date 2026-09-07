@@ -1,133 +1,421 @@
 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design Agency - Portfolio</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design Studio - Jasa & Template</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
-        body { background:#0f0f1a; color:#fff; padding:20px; }
-        .container { max-width:1200px; margin:auto; background:#1a1a2e; padding:30px; border-radius:24px; }
-        .header { text-align:center; padding:20px 0; border-bottom:2px solid #2a2a4a; }
-        .header h1 { font-size:2.8rem; background:linear-gradient(135deg,#f093fb,#f5576c); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .section-title { font-size:1.8rem; margin:40px 0 20px; color:#f093fb; }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+        /* ===== RESET & GLOBAL ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
-        .card {
-            background: #252545;
-            border-radius: 16px;
-            padding: 20px;
+
+        body {
+            background: #0f0f1a;
+            color: #fff;
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
             text-align: center;
-            border: 1px solid #33335a;
+            padding: 30px 0 20px;
+            border-bottom: 2px solid #1a1a2e;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 1.1rem;
+            margin-top: 8px;
+        }
+
+        .header .wa-link {
+            display: inline-block;
+            margin-top: 12px;
+            background: #25D366;
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
             transition: 0.3s;
         }
-        .card:hover { transform:translateY(-8px); border-color:#f5576c; box-shadow:0 12px 30px rgba(245,87,108,0.3); }
-        .card img { width:100%; border-radius:12px; height:200px; object-fit:cover; background:#1a1a2e; }
-        .card h4 { margin:12px 0 5px; color:#fff; }
-        .card p { color:#999; font-size:0.9rem; }
-        .card .category { color:#f5576c; font-size:0.8rem; font-weight:bold; }
-        
-        .loading { text-align:center; padding:40px; color:#999; }
-        .error { text-align:center; padding:40px; color:#f5576c; }
-        .btn-refresh { 
-            background:#f5576c; color:#fff; border:none; padding:10px 25px; 
-            border-radius:30px; cursor:pointer; margin:10px auto; display:inline-block;
+
+        .header .wa-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
         }
-        .btn-refresh:hover { background:#d94a5e; }
-        
-        .footer { text-align:center; margin-top:40px; color:#666; border-top:1px solid #2a2a4a; padding-top:25px; }
-        
-        @media (max-width:600px) {
-            .header h1 { font-size:1.8rem; }
-            .container { padding:15px; }
+
+        /* ===== SECTION DIVIDER ===== */
+        .section-divider {
+            margin: 45px 0 30px;
+            text-align: center;
+            border-top: 1px solid #2a2a4a;
+            padding-top: 30px;
+        }
+
+        .section-divider span {
+            background: #0f0f1a;
+            padding: 0 25px;
+            color: #f093fb;
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* ===== GRID KARTU ===== */
+        .cards-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        /* ===== KARTU ===== */
+        .card {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            border: 1px solid #2a2a4a;
+            transition: 0.4s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.15);
+        }
+
+        .card .icon {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+
+        .card .sub {
+            color: #aaa;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .card .price-tag {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .card .badge-wa {
+            display: inline-block;
+            background: #25D366;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .card:hover .badge-wa {
+            transform: scale(1.05);
+        }
+
+        /* ===== WARNA PER KARTU ===== */
+        /* Jasa */
+        .card-jasa1 .price-tag { background: #27ae60; }
+        .card-jasa1:hover { border-color: #27ae60; box-shadow: 0 15px 40px rgba(39, 174, 96, 0.2); }
+
+        .card-jasa2 .price-tag { background: #f39c12; }
+        .card-jasa2:hover { border-color: #f39c12; box-shadow: 0 15px 40px rgba(243, 156, 18, 0.2); }
+
+        .card-jasa3 .price-tag { background: #8e44ad; }
+        .card-jasa3:hover { border-color: #8e44ad; box-shadow: 0 15px 40px rgba(142, 68, 173, 0.2); }
+
+        /* Template */
+        .card-template1 .price-tag { background: #e74c3c; }
+        .card-template1:hover { border-color: #e74c3c; box-shadow: 0 15px 40px rgba(231, 76, 60, 0.2); }
+
+        .card-template2 .price-tag { background: #3498db; }
+        .card-template2:hover { border-color: #3498db; box-shadow: 0 15px 40px rgba(52, 152, 219, 0.2); }
+
+        .card-template3 .price-tag { background: #1abc9c; }
+        .card-template3:hover { border-color: #1abc9c; box-shadow: 0 15px 40px rgba(26, 188, 156, 0.2); }
+
+        /* ===== FORM ===== */
+        .form-section {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 45px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .form-section h2 {
+            text-align: center;
+            color: #f093fb;
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #ccc;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid #3a3a5a;
+            background: #0f0f1a;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+
+        .btn-submit {
+            background: #25D366;
+            color: #fff;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background: #1da851;
+            transform: scale(1.02);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 45px;
+            color: #555;
+            font-size: 0.85rem;
+            border-top: 1px solid #1a1a2e;
+            padding-top: 25px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .header h1 { font-size: 2rem; }
+            .cards-wrapper { grid-template-columns: 1fr; }
+            .card { padding: 20px; }
+            .form-section { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+
+    <!-- ==================== HEADER ==================== -->
     <div class="header">
-        <h1>🎨 Design Agency</h1>
-        <p>Portfolio Tim Desain Profesional</p>
+        <h1>🎨 Design Studio</h1>
+        <p>Jasa Design &amp; Template Siap Pakai</p>
+        <a href="https://wa.me/628134595671" class="wa-link" target="_blank">
+            💬 Chat Langsung via WhatsApp
+        </a>
     </div>
 
-    <div class="section-title">📂 Portfolio</div>
-    <div id="loading" class="loading">⏳ Memuat portfolio...</div>
-    <div class="grid" id="portfolio-list"></div>
-    <div style="text-align:center;">
-        <button class="btn-refresh" onclick="loadPortfolio()">🔄 Refresh Data</button>
+    <!-- ==================== JASA DESIGN ==================== -->
+    <div class="section-divider"><span>💼 Jasa Design</span></div>
+
+    <div class="cards-wrapper">
+
+        <!-- JASA 1: Logo Basic -->
+        <a href="https://wa.me/628134595671?text=Halo%20Kak%2C%20saya%20mau%20order%20Logo%20Basic.%0A%0ANama%20Brand%3A%20...%0AWarna%20Favorit%3A%20...%0AGaya%20Design%3A%20...%0A%0ATerima%20kasih%20%F0%9F%99%8F"
+           class="card card-jasa1" target="_blank">
+            <div class="icon">🖌️</div>
+            <h3>Logo Basic</h3>
+            <p class="sub">1 konsep · 3x revisi · File PNG+JPG</p>
+            <span class="price-tag">Rp200.000</span>
+            <div class="badge-wa">📞 Pesan via WA</div>
+        </a>
+
+        <!-- JASA 2: Logo Premium -->
+        <a href="https://wa.me/628134595671?text=Halo%20Kak%2C%20saya%20mau%20order%20Logo%20Premium.%0A%0ANama%20Brand%3A%20...%0AWarna%20Favorit%3A%20...%0AGaya%20Design%3A%20...%0AReferensi%20Tambahan%3A%20...%0A%0ATerima%20kasih%20%F0%9F%99%8F"
+           class="card card-jasa2" target="_blank">
+            <div class="icon">✨</div>
+            <h3>Logo Premium</h3>
+            <p class="sub">3 konsep · 5x revisi · File PNG+JPG+EPS</p>
+            <span class="price-tag">Rp500.000</span>
+            <div class="badge-wa">📞 Pesan via WA</div>
+        </a>
+
+        <!-- JASA 3: Branding Package -->
+        <a href="https://wa.me/628134595671?text=Halo%20Kak%2C%20saya%20mau%20order%20Branding%20Package.%0A%0ANama%20Brand%3A%20...%0AJenis%20Usaha%3A%20...%0AWarna%20Favorit%3A%20...%0AReferensi%20Design%3A%20...%0A%0ATerima%20kasih%20%F0%9F%99%8F"
+           class="card card-jasa3" target="_blank">
+            <div class="icon">📦</div>
+            <h3>Branding Package</h3>
+            <p class="sub">Logo + Feed IG + Banner + Packaging</p>
+            <span class="price-tag">Rp1.200.000</span>
+            <div class="badge-wa">📞 Pesan via WA</div>
+        </a>
+
     </div>
 
-    <div class="footer">&copy; 2026 Design Agency - Portfolio otomatis dari Google Sheets 🚀</div>
+    <!-- ==================== TEMPLATE ==================== -->
+    <div class="section-divider"><span>📂 Template Siap Pakai</span></div>
+
+    <div class="cards-wrapper">
+
+        <!-- TEMPLATE 1: Feed IG -->
+        <a href="https://wa.me/628134595671?text=Halo%20Kak%2C%20saya%20mau%20beli%20Template%20Feed%20IG.%0A%0AJumlah%3A%20...%20post%0ATema%3A%20...%0AWarna%20Favorit%3A%20...%0A%0ATerima%20kasih%20%F0%9F%99%8F"
+           class="card card-template1" target="_blank">
+            <div class="icon">📱</div>
+            <h3>Feed IG Template</h3>
+            <p class="sub">10 post + 5 story · Editable Canva</p>
+            <span class="price-tag">Rp350.000</span>
+            <div class="badge-wa">📞 Beli via WA</div>
+        </a>
+
+        <!-- TEMPLATE 2: Mockup Product -->
+        <a href="https://wa.me/628134595671?text=Halo%20Kak%2C%20saya%20mau%20beli%20Mockup%20Product.%0A%0AJenis%20Produk%3A%20...%0AFormat%3A%20...%0A%0ATerima%20kasih%20%F0%9F%99%8F"
+           class="card card-template2" target="_blank">
+            <div class="icon">🖼️</div>
+            <h3>Mockup Product</h3>
+            <p class="sub">5 mockup · File PSD + PNG</p>
+            <span class="price-tag">Rp150.000</span>
+            <div class="badge-wa">📞 Beli via WA</div>
+        </a>
+
+        <!-- TEMPLATE 3: Presentation -->
+        <a href="https://wa.me/628134595671?text=Halo%20Kak%2C%20saya%20mau%20beli%20Template%20Presentasi.%0A%0ATema%3A%20...%0AJumlah%20Slide%3A%20...%0A%0ATerima%20kasih%20%F0%9F%99%8F"
+           class="card card-template3" target="_blank">
+            <div class="icon">📊</div>
+            <h3>Template Presentasi</h3>
+            <p class="sub">20 slide · Canva + PowerPoint</p>
+            <span class="price-tag">Rp250.000</span>
+            <div class="badge-wa">📞 Beli via WA</div>
+        </a>
+
+    </div>
+
+    <!-- ==================== FORM PEMESANAN ==================== -->
+    <div class="form-section">
+        <h2>📝 Pesan Jasa / Template</h2>
+        <form id="orderForm">
+            <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" id="nama" placeholder="Nama Anda" required />
+            </div>
+            <div class="form-group">
+                <label>Nomor WhatsApp</label>
+                <input type="text" id="wa" placeholder="08123456789" required />
+            </div>
+            <div class="form-group">
+                <label>Pilih Produk</label>
+                <select id="produk">
+                    <option value="Logo Basic - Rp200.000">Logo Basic - Rp200.000</option>
+                    <option value="Logo Premium - Rp500.000">Logo Premium - Rp500.000</option>
+                    <option value="Branding Package - Rp1.200.000">Branding Package - Rp1.200.000</option>
+                    <option value="Feed IG Template - Rp350.000">Feed IG Template - Rp350.000</option>
+                    <option value="Mockup Product - Rp150.000">Mockup Product - Rp150.000</option>
+                    <option value="Template Presentasi - Rp250.000">Template Presentasi - Rp250.000</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Brief / Keterangan</label>
+                <textarea id="brief" placeholder="Jelaskan keinginan Anda..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">📩 Kirim via WhatsApp</button>
+        </form>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <div class="footer">
+        © 2026 Design Studio — Semua pesanan diproses via WhatsApp
+    </div>
+
 </div>
 
 <script>
     // ========================================
-    // 📝 GANTI LINK INI DENGAN LINK GOOGLE SHEETS ANDA
+    // FORM → KIRIM KE WHATSAPP
     // ========================================
-    const SHEETS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vXXXXX/pub?output=csv';
-    // Ganti dengan link Anda!
 
-    async function loadPortfolio() {
-        const container = document.getElementById('portfolio-list');
-        const loading = document.getElementById('loading');
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+        e.preventDefault();
 
-        try {
-            loading.style.display = 'block';
-            loading.innerHTML = '⏳ Memuat data...';
-            loading.className = 'loading';
+        const nama = document.getElementById('nama').value.trim();
+        const wa = document.getElementById('wa').value.trim();
+        const produk = document.getElementById('produk').value;
+        const brief = document.getElementById('brief').value.trim();
 
-            const response = await fetch(SHEETS_URL);
-            const csvText = await response.text();
-            
-            // Parse CSV
-            const rows = csvText.split('\n').map(row => row.split(','));
-            
-            // Hapus header (baris pertama)
-            const data = rows.slice(1).filter(row => row[2] && row[2].trim() !== '');
-            
-            if (data.length === 0) {
-                loading.innerHTML = '⚠️ Belum ada data. Tambahkan di Google Sheets!';
-                loading.className = 'error';
-                container.innerHTML = '';
-                return;
-            }
-
-            loading.style.display = 'none';
-
-            // Render data
-            container.innerHTML = data.map(row => {
-                const nama = row[0]?.trim() || 'Tanpa Judul';
-                const kategori = row[1]?.trim() || 'Umum';
-                const gambar = row[2]?.trim() || '';
-                const deskripsi = row[3]?.trim() || '';
-
-                return `
-                    <div class="card">
-                        <img src="${gambar}" alt="${nama}" onerror="this.src='https://via.placeholder.com/300x200?text=Gambar+Error'" />
-                        <h4>${nama}</h4>
-                        <div class="category">${kategori}</div>
-                        <p>${deskripsi}</p>
-                    </div>
-                `;
-            }).join('');
-
-        } catch (error) {
-            loading.innerHTML = '❌ Gagal memuat data. Cek link Google Sheets!';
-            loading.className = 'error';
-            console.error('Error:', error);
+        if (!nama || !wa || !brief) {
+            alert('⚠️ Semua field wajib diisi!');
+            return;
         }
-    }
 
-    // Jalankan saat halaman dimuat
-    loadPortfolio();
+        // GANTI DENGAN NOMOR WA ANDA
+        const nomorOwner = '628134595671';
+
+        const pesan = `Halo Kak! Saya mau pesan:
+
+📌 Nama: ${nama}
+📱 WhatsApp: ${wa}
+📦 Produk: ${produk}
+📝 Brief: ${brief}
+
+Terima kasih! 🙏`;
+
+        const urlWA = `https://wa.me/${nomorOwner}?text=${encodeURIComponent(pesan)}`;
+        window.open(urlWA, '_blank');
+    });
 </script>
 
 </body>
