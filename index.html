@@ -1,60 +1,240 @@
-// KamOj Desain â€” Worker dengan galeri online (data tersimpan di server Base44)
-const API = 'https://solas-cb27e335.base44.app/functions/karyaApi';
-const ADMIN_CODE = 'kamoj2026';
-const HTML = "<!DOCTYPE html>\n<html lang=\"id\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>KamOj Desain \u2014 Desain Grafis, Timika</title>\n<meta name=\"description\" content=\"Jasa desain grafis di Timika: poster, company profile, merchandise, dan desain kaos. Lihat dan pesan karya KamOj Desain langsung via WhatsApp.\">\n\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n<link href=\"https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap\" rel=\"stylesheet\">\n\n<style>\n  :root{\n    --bg:        #0d0d0d;\n    --surface:   #161514;\n    --line:      #3a2f2d;\n    --red:       #c81d25;\n    --red-dark:  #7a1315;\n    --ink:       #ede8e2;\n    --muted:     #948d87;\n  }\n\n  *{ box-sizing: border-box; }\n  html{ scroll-behavior: smooth; }\n  @media (prefers-reduced-motion: reduce){\n    html{ scroll-behavior: auto; }\n    *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }\n  }\n\n  body{\n    margin:0;\n    background: var(--bg);\n    color: var(--ink);\n    font-family: 'IBM Plex Sans', sans-serif;\n    line-height: 1.55;\n  }\n\n  a{ color: inherit; }\n  img{ max-width:100%; display:block; }\n\n  :focus-visible{\n    outline: 2px solid var(--red);\n    outline-offset: 3px;\n  }\n\n  .wrap{\n    max-width: 1080px;\n    margin: 0 auto;\n    padding: 0 24px;\n  }\n\n  h1, h2, h3{\n    font-family: 'Big Shoulders Display', sans-serif;\n    font-weight: 900;\n    letter-spacing: 0.01em;\n    margin: 0;\n  }\n\n  .meta{\n    font-family: 'IBM Plex Mono', monospace;\n    font-size: 0.78rem;\n    color: var(--muted);\n  }\n\n  /* ---------- header ---------- */\n  header{\n    border-bottom: 1px solid var(--line);\n    position: sticky;\n    top: 0;\n    background: rgba(13,13,13,0.92);\n    backdrop-filter: blur(6px);\n    z-index: 10;\n  }\n  .header-inner{\n    display:flex;\n    align-items:center;\n    justify-content: space-between;\n    padding: 18px 0;\n    gap: 16px;\n  }\n  .brand{\n    font-family:'Big Shoulders Display', sans-serif;\n    font-weight: 900;\n    font-size: 1.4rem;\n    line-height:1;\n  }\n  .brand span{ color: var(--red); }\n  nav{ display:flex; gap: 22px; align-items:center; }\n  nav a{\n    text-decoration:none;\n    font-size: 0.92rem;\n    color: var(--muted);\n  }\n  nav a:hover{ color: var(--ink); }\n  .nav-phone{\n    font-family:'IBM Plex Mono', monospace;\n    color: var(--ink) !important;\n    border: 1px solid var(--line);\n    padding: 6px 12px;\n  }\n  @media (max-width: 620px){\n    nav a:not(.nav-phone){ display:none; }\n  }\n\n  /* ---------- hero ---------- */\n  .hero{\n    padding: 96px 0 72px;\n    border-bottom: 1px solid var(--line);\n    position: relative;\n    overflow: hidden;\n  }\n  .hero::before{\n    content:\"\";\n    position:absolute;\n    right: -10%;\n    top: 0;\n    bottom: 0;\n    width: 45%;\n    background:\n      repeating-linear-gradient(180deg, var(--line) 0, var(--line) 1px, transparent 1px, transparent 64px),\n      repeating-linear-gradient(90deg, var(--line) 0, var(--line) 1px, transparent 1px, transparent 64px);\n    opacity: 0.35;\n    mask-image: linear-gradient(90deg, transparent, black 40%);\n  }\n  .hero-inner{ position:relative; max-width: 640px; }\n  .hero h1{\n    font-size: clamp(2.4rem, 6vw, 4.2rem);\n    line-height: 0.98;\n  }\n  .hero .rule{\n    width: 72px;\n    height: 6px;\n    background: var(--red);\n    margin: 22px 0;\n  }\n  .hero p{\n    color: var(--muted);\n    font-size: 1.05rem;\n    max-width: 46ch;\n  }\n  .cta-row{\n    margin-top: 34px;\n    display:flex;\n    gap: 14px;\n    flex-wrap: wrap;\n  }\n  .btn{\n    display:inline-flex;\n    align-items:center;\n    gap:8px;\n    padding: 13px 22px;\n    text-decoration:none;\n    font-size: 0.95rem;\n    font-weight: 500;\n    border: 1px solid var(--line);\n  }\n  .btn-primary{\n    background: var(--red);\n    border-color: var(--red);\n    color: #fff;\n  }\n  .btn-primary:hover{ background: var(--red-dark); border-color: var(--red-dark); }\n  .btn-ghost:hover{ border-color: var(--ink); }\n\n  /* ---------- section shell ---------- */\n  section{ padding: 72px 0; border-bottom: 1px solid var(--line); }\n  .section-head{\n    display:flex;\n    justify-content: space-between;\n    align-items: flex-end;\n    gap: 24px;\n    margin-bottom: 40px;\n    flex-wrap: wrap;\n  }\n  .section-head h2{ font-size: clamp(1.8rem, 4vw, 2.6rem); }\n  .section-head p{ color: var(--muted); max-width: 40ch; margin: 0; }\n\n  /* ---------- tentang ---------- */\n  .about-grid{\n    display:grid;\n    grid-template-columns: 1.1fr 1fr;\n    gap: 48px;\n  }\n  @media (max-width: 760px){ .about-grid{ grid-template-columns: 1fr; } }\n  .about-grid p{ color: var(--muted); }\n  .about-list{ list-style:none; margin:0; padding:0; }\n  .about-list li{\n    padding: 14px 0;\n    border-top: 1px solid var(--line);\n    display:flex;\n    justify-content: space-between;\n    gap: 12px;\n    font-size: 0.95rem;\n  }\n  .about-list li:last-child{ border-bottom: 1px solid var(--line); }\n  .about-list .tag{ color: var(--red); font-family:'IBM Plex Mono', monospace; font-size: 0.78rem; }\n\n  /* ---------- galeri ---------- */\n  .gallery{\n    display:grid;\n    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));\n    gap: 28px;\n  }\n  .card{\n    border: 1px solid var(--line);\n    background: var(--surface);\n    display:flex;\n    flex-direction: column;\n  }\n  .card-media{\n    aspect-ratio: 4/3;\n    border-bottom: 1px solid var(--line);\n    position: relative;\n    background: #1c1a19;\n    overflow:hidden;\n  }\n  .card-media img{ width:100%; height:100%; object-fit: cover; }\n  .card-media .corner{\n    position:absolute; width:14px; height:14px;\n    border: 2px solid var(--red);\n  }\n  .corner.tl{ top:8px; left:8px; border-right:none; border-bottom:none; }\n  .corner.br{ bottom:8px; right:8px; border-left:none; border-top:none; }\n  .card-body{ padding: 18px 20px 20px; display:flex; flex-direction:column; gap: 10px; flex:1; }\n  .card-body h3{ font-size: 1.15rem; font-weight: 700; }\n  .card-spec{ color: var(--muted); font-size: 0.88rem; }\n  .card-foot{\n    margin-top: auto;\n    display:flex;\n    align-items:center;\n    justify-content: space-between;\n    padding-top: 12px;\n    border-top: 1px solid var(--line);\n  }\n  .card-price{ font-family:'IBM Plex Mono', monospace; font-size: 0.95rem; }\n  .card-order{\n    font-size: 0.85rem;\n    text-decoration:none;\n    color: var(--red);\n    border-bottom: 1px solid var(--red);\n    padding-bottom: 1px;\n  }\n  .card-order:hover{ color: var(--ink); border-color: var(--ink); }\n\n  /* ---------- cara pesan ---------- */\n  .steps{\n    display:grid;\n    grid-template-columns: repeat(3, 1fr);\n    gap: 0;\n    border-top: 1px solid var(--line);\n    border-left: 1px solid var(--line);\n  }\n  @media (max-width: 760px){ .steps{ grid-template-columns: 1fr; } }\n  .step{\n    padding: 28px 26px;\n    border-right: 1px solid var(--line);\n    border-bottom: 1px solid var(--line);\n  }\n  .step .n{\n    font-family:'Big Shoulders Display', sans-serif;\n    font-weight: 900;\n    font-size: 2.2rem;\n    color: var(--red);\n    line-height:1;\n  }\n  .step h3{ font-size: 1.05rem; font-weight:600; margin-top: 10px; }\n  .step p{ color: var(--muted); font-size: 0.92rem; margin: 8px 0 0; }\n\n  /* ---------- footer ---------- */\n  footer{ padding: 48px 0; }\n  .foot-inner{\n    display:flex;\n    justify-content: space-between;\n    align-items:center;\n    flex-wrap: wrap;\n    gap: 16px;\n  }\n  .foot-inner .meta{ font-size: 0.8rem; }\n\n  /* ---------- modal tambah karya ---------- */\n  .modal {\n    display: none;\n    position: fixed;\n    z-index: 100;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.8);\n  }\n\n  .modal-content {\n    background-color: var(--surface);\n    margin: 5% auto;\n    padding: 30px;\n    border: 1px solid var(--line);\n    border-radius: 8px;\n    width: 90%;\n    max-width: 500px;\n    max-height: 80vh;\n    overflow-y: auto;\n  }\n\n  .close {\n    color: var(--muted);\n    float: right;\n    font-size: 28px;\n    font-weight: bold;\n    cursor: pointer;\n  }\n\n  .close:hover {\n    color: var(--ink);\n  }\n\n  .form-group {\n    margin-bottom: 20px;\n  }\n\n  .form-group label {\n    display: block;\n    margin-bottom: 8px;\n    font-weight: 500;\n  }\n\n  .form-group input,\n  .form-group textarea {\n    width: 100%;\n    padding: 10px;\n    background: var(--bg);\n    border: 1px solid var(--line);\n    color: var(--ink);\n    font-family: 'IBM Plex Sans', sans-serif;\n    border-radius: 4px;\n  }\n\n  .form-group textarea {\n    resize: vertical;\n    min-height: 80px;\n  }\n\n  .btn-submit {\n    background: var(--red);\n    border-color: var(--red);\n    color: #fff;\n    cursor: pointer;\n    width: 100%;\n  }\n\n  .btn-submit:hover {\n    background: var(--red-dark);\n    border-color: var(--red-dark);\n  }\n</style>\n</head>\n<body>\n\n<header>\n  <div class=\"wrap header-inner\">\n    <div class=\"brand\">KAM<span>OJ</span> DESAIN</div>\n    <nav>\n      <a href=\"#tentang\">Tentang</a>\n      <a href=\"#karya\">Karya</a>\n      <a href=\"#pesan\">Cara pesan</a>\n      <a class=\"nav-phone\" href=\"https://wa.me/628134595671\" target=\"_blank\" rel=\"noopener\">0813-4595-671</a>\n    </nav>\n  </div>\n</header>\n\n<section class=\"hero\">\n  <div class=\"wrap hero-inner\">\n    <h1>Desain grafis,<br>dikerjakan dari Timika.</h1>\n    <div class=\"rule\"></div>\n    <p>Poster, company profile, merchandise, dan desain kaos \u2014 dikerjakan cepat dan siap cetak. Kirim kebutuhanmu lewat WhatsApp, terima file jadi hari itu juga.</p>\n    <div class=\"cta-row\">\n      <a class=\"btn btn-primary\" href=\"#karya\">Lihat karya</a>\n      <a class=\"btn btn-ghost\" href=\"#\" onclick=\"pendingOrder=null; openVisitorModal(); return false;\">Pesan via WhatsApp</a>\n    </div>\n  </div>\n</section>\n\n<section id=\"tentang\">\n  <div class=\"wrap about-grid\">\n    <div>\n      <div class=\"section-head\" style=\"margin-bottom:20px;\">\n        <h2>Tentang KamOj Desain</h2>\n      </div>\n      <p>KamOj Desain mengerjakan kebutuhan desain grafis \u2014 dari materi promosi, company profile, poster rekrutmen, sampai desain merchandise dan kaos. Cocok untuk usaha kecil, toko, atau komunitas yang butuh desain rapi tanpa proses ribet.</p>\n      <p>Berbasis di Timika, pengerjaan dan pemesanan langsung lewat WhatsApp.</p>\n    </div>\n    <ul class=\"about-list\">\n      <li><span>Poster & materi promosi</span><span class=\"tag\">DESAIN</span></li>\n      <li><span>Company profile & profil usaha</span><span class=\"tag\">PROFIL</span></li>\n      <li><span>Desain kaos & merchandise</span><span class=\"tag\">MERCH</span></li>\n      <li><span>Revisi cepat, file siap cetak</span><span class=\"tag\">FILE</span></li>\n    </ul>\n  </div>\n</section>\n\n<section id=\"karya\">\n  <div class=\"wrap\">\n    <div class=\"section-head\">\n      <h2>Karya kami</h2>\n      <p>Contoh hasil desain. Tiap karya bisa dipesan langsung lewat WhatsApp.</p>\n    </div>\n    <div id=\"adminBar\"></div>\n    <div class=\"gallery\" id=\"gallery\"></div>\n  </div>\n</section>\n\n<section id=\"pesan\">\n  <div class=\"wrap\">\n    <div class=\"section-head\">\n      <h2>Cara pesan</h2>\n      <p>Tiga langkah, selesai lewat WhatsApp.</p>\n    </div>\n    <div class=\"steps\">\n      <div class=\"step\">\n        <div class=\"n\">1</div>\n        <h3>Pilih desain</h3>\n        <p>Lihat karya di atas, atau ceritakan kebutuhanmu langsung.</p>\n      </div>\n      <div class=\"step\">\n        <div class=\"n\">2</div>\n        <h3>Chat WhatsApp</h3>\n        <p>Sampaikan detail desain yang kamu butuhkan lewat WhatsApp.</p>\n      </div>\n      <div class=\"step\">\n        <div class=\"n\">3</div>\n        <h3>Bayar & terima file</h3>\n        <p>Setelah pembayaran, file gambar dikirim langsung ke WhatsApp.</p>\n      </div>\n    </div>\n  </div>\n</section>\n\n<footer>\n  <div class=\"wrap foot-inner\">\n    <div class=\"meta\">\u00a9 2026 KAMOJ DESAIN \u2014 Timika</div>\n    <div class=\"meta\">WA 0813-4595-671</div>\n    <div class=\"meta\" style=\"margin-top:10px;\"><a href=\"#\" onclick=\"adminLogin(); return false;\" style=\"text-decoration:underline;\">Kelola karya (admin)</a></div>\n  </div>\n</footer>\n\n<!-- Modal untuk tambah karya -->\n<div id=\"modal\" class=\"modal\">\n  <div class=\"modal-content\">\n    <span class=\"close\" onclick=\"closeModal()\">&times;</span>\n    <h2 id=\"modalTitle\" style=\"margin-top: 0;\">Tambah Karya Baru</h2>\n    <form onsubmit=\"tambahKarya(event)\">\n      <div class=\"form-group\">\n        <label for=\"judul\">Judul Karya</label>\n        <input type=\"text\" id=\"judul\" placeholder=\"Contoh: Desain Kaos SATGAS\" required>\n      </div>\n      <div class=\"form-group\">\n        <label for=\"spek\">Spesifikasi/Deskripsi</label>\n        <textarea id=\"spek\" placeholder=\"Contoh: Desain grafis untuk sablon, siap pisah warna\" required></textarea>\n      </div>\n      <div class=\"form-group\">\n        <label for=\"harga\">Harga</label>\n        <input type=\"text\" id=\"harga\" placeholder=\"Contoh: Rp50.000\" required>\n      </div>\n      <div class=\"form-group\">\n        <label for=\"gambar\">URL Foto Karya</label>\n        <input type=\"url\" id=\"gambar\" placeholder=\"https://example.com/image.jpg (opsional)\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"wa\">Nomor WhatsApp (opsional)</label>\n        <input type=\"text\" id=\"wa\" placeholder=\"Kosongkan untuk pakai nomor default (0813-4595-671)\">\n      </div>\n      <button type=\"submit\" class=\"btn btn-submit\">Simpan Karya</button>\n    </form>\n  </div>\n</div>\n\n<!-- Modal data pengunjung -->\n<div id=\"vmodal\" class=\"modal\">\n  <div class=\"modal-content\">\n    <span class=\"close\" onclick=\"closeVisitorModal()\">&times;</span>\n    <h2 style=\"margin-top: 0;\">Boleh kenalan dulu?</h2>\n    <p class=\"meta\" style=\"margin-bottom:18px;\">Isi nama &amp; nomor WhatsApp, lanjut langsung ke chat desainer.</p>\n    <form onsubmit=\"submitVisitor(event)\">\n      <div class=\"form-group\">\n        <label for=\"vnama\">Nama Anda</label>\n        <input type=\"text\" id=\"vnama\" placeholder=\"Nama Anda\" required>\n      </div>\n      <div class=\"form-group\">\n        <label for=\"vwa\">Nomor WhatsApp</label>\n        <input type=\"text\" id=\"vwa\" placeholder=\"08xxxxxxxxxx\" required>\n      </div>\n      <button type=\"submit\" class=\"btn btn-submit\">Lanjut ke WhatsApp</button>\n    </form>\n  </div>\n</div>\n\n<script>\n  // ======================================================================\n  // KARYA ONLINE - data dari server, sama untuk semua pengunjung\n  // ======================================================================\n  const DEFAULT_WA = \"628134595671\";\n  let adminCode = null;\n  let editingId = null;\n  let pendingOrder = null;\n  let KARYA = [];\n\n  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;'); }\n\n  async function apiGet(){\n    const r = await fetch('/api/karya');\n    const d = await r.json();\n    return d.items || [];\n  }\n\n  async function apiPost(payload){\n    const r = await fetch('/api/karya', {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify(payload)\n    });\n    return await r.json();\n  }\n\n  function waLink(item){\n    const nomor = (item && item.wa) ? item.wa : DEFAULT_WA;\n    const pesan = item\n      ? encodeURIComponent('Halo KamOj Desain, saya tertarik dengan \"' + item.judul + '\". Boleh info lebih lanjut?')\n      : encodeURIComponent('Halo KamOj Desain, saya mau tanya-tanya soal jasa desain.');\n    return 'https://wa.me/' + nomor + '?text=' + pesan;\n  }\n\n  async function renderGallery(){\n    const el = document.getElementById('gallery');\n    el.innerHTML = '<div class=\"meta\">Memuat karya\u2026</div>';\n    try { KARYA = await apiGet(); } catch(e) { KARYA = []; }\n    if(!KARYA.length){\n      el.innerHTML = '<div class=\"meta\">Belum ada karya yang dipajang.</div>';\n      return;\n    }\n    el.innerHTML = KARYA.map(function(item, i){\n      return `\n      <div class=\"card\">\n        <div class=\"card-media\">\n          ${item.gambar\n            ? `<img src=\"${esc(item.gambar)}\" alt=\"${esc(item.judul)}\" loading=\"lazy\">`\n            : `<div style=\"width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:0.9rem;\">Foto belum ditambahkan</div>`}\n          <div class=\"corner tl\"></div>\n          <div class=\"corner br\"></div>\n        </div>\n        <div class=\"card-body\">\n          <h3>${esc(item.judul)}</h3>\n          <div class=\"card-spec\">${esc(item.spek)}</div>\n          <div class=\"card-foot\">\n            <span class=\"card-price\">${esc(item.harga)}</span>\n            <a class=\"card-order\" href=\"#\" onclick=\"orderKarya(${i}); return false;\">Pesan \u2192</a>\n          </div>\n        </div>\n        ${adminCode ? `\n        <div style=\"padding: 10px 20px; border-top: 1px solid var(--line); display: flex; gap: 10px;\">\n          <button onclick=\"editKarya(${i})\" style=\"flex:1; padding:8px; background:var(--red); color:#fff; border:none; border-radius:4px; cursor:pointer;\">Edit</button>\n          <button onclick=\"hapusKarya(${i})\" style=\"flex:1; padding:8px; background:#555; color:#fff; border:none; border-radius:4px; cursor:pointer;\">Hapus</button>\n        </div>` : ''}\n      </div>`;\n    }).join('');\n  }\n\n  // ---------- pengunjung / order ----------\n  function openVisitorModal(){\n    document.getElementById('vmodal').style.display = 'block';\n  }\n  function closeVisitorModal(){\n    document.getElementById('vmodal').style.display = 'none';\n  }\n  function orderKarya(i){\n    pendingOrder = KARYA[i] || null;\n    openVisitorModal();\n  }\n  async function submitVisitor(event){\n    event.preventDefault();\n    const nama = document.getElementById('vnama').value.trim();\n    const wa = document.getElementById('vwa').value.trim();\n    if(!nama || !wa){ alert('Nama dan nomor WA wajib diisi ya'); return; }\n    try{\n      await fetch('/api/visitor', {\n        method: 'POST',\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify({ nama: nama, wa: wa, karya: pendingOrder ? pendingOrder.judul : '' })\n      });\n    }catch(e){}\n    const url = pendingOrder ? waLink(pendingOrder) : waLink(null);\n    window.open(url, '_blank');\n    closeVisitorModal();\n    document.getElementById('vnama').value = '';\n    document.getElementById('vwa').value = '';\n  }\n\n  // ---------- admin ----------\n  async function adminLogin(){\n    const code = prompt('Masukkan kode admin:');\n    if(!code) return;\n    const d = await apiPost({ adminCode: code, action: 'login' });\n    if(d.ok){\n      adminCode = code;\n      document.getElementById('adminBar').innerHTML =\n        '<button class=\"btn btn-primary\" onclick=\"openModal()\" style=\"margin-bottom: 30px;\">+ Tambah Karya Baru</button>' +\n        '<button class=\"btn btn-ghost\" onclick=\"lihatPengunjung()\" style=\"margin-bottom: 30px; margin-left:10px;\">Lihat Pengunjung</button>';\n      renderGallery();\n    } else {\n      alert(d.error || 'Kode salah');\n    }\n  }\n\n  async function lihatPengunjung(){\n    const d = await apiPost({ adminCode: adminCode, action: 'visitor-list' });\n    if(!d.ok){ alert(d.error || 'Gagal memuat pengunjung'); return; }\n    const v = d.visitors || [];\n    if(!v.length){ alert('Belum ada pengunjung yang mengisi data.'); return; }\n    alert('Pengunjung (' + v.length + '):\\n\\n' + v.map(function(x){\n      return x.nama + ' \u2014 ' + x.wa + (x.karya ? ' (' + x.karya + ')' : '');\n    }).join('\\n'));\n  }\n\n  function openModal(){\n    editingId = null;\n    document.getElementById('modalTitle').textContent = 'Tambah Karya Baru';\n    document.getElementById('modal').style.display = 'block';\n    document.getElementById('judul').value = '';\n    document.getElementById('spek').value = '';\n    document.getElementById('harga').value = '';\n    document.getElementById('gambar').value = '';\n    document.getElementById('wa').value = '';\n  }\n\n  function closeModal(){\n    document.getElementById('modal').style.display = 'none';\n  }\n\n  async function tambahKarya(event){\n    event.preventDefault();\n    if(!adminCode){ alert('Login admin dulu lewat link \"Kelola karya\" di bawah.'); return; }\n    const isEdit = !!editingId;\n    const payload = {\n      adminCode: adminCode,\n      judul: document.getElementById('judul').value,\n      spek: document.getElementById('spek').value,\n      harga: document.getElementById('harga').value,\n      gambar: document.getElementById('gambar').value,\n      wa: document.getElementById('wa').value\n    };\n    if(isEdit){ payload.action = 'update'; payload.id = editingId; }\n    const d = await apiPost(payload);\n    if(d.ok){\n      closeModal();\n      renderGallery();\n      alert(isEdit ? 'Karya diperbarui!' : 'Karya berhasil ditambahkan!');\n      editingId = null;\n    } else {\n      alert(d.error || 'Gagal menyimpan');\n    }\n  }\n\n  function editKarya(i){\n    const item = KARYA[i];\n    editingId = item.id;\n    document.getElementById('modalTitle').textContent = 'Edit Karya';\n    document.getElementById('judul').value = item.judul || '';\n    document.getElementById('spek').value = item.spek || '';\n    document.getElementById('harga').value = item.harga || '';\n    document.getElementById('gambar').value = item.gambar || '';\n    document.getElementById('wa').value = item.wa || '';\n    document.getElementById('modal').style.display = 'block';\n  }\n\n  async function hapusKarya(i){\n    const item = KARYA[i];\n    if(!confirm('Hapus \"' + (item.judul || 'karya ini') + '\"?')) return;\n    const d = await apiPost({ adminCode: adminCode, action: 'delete', id: item.id });\n    if(d.ok){ renderGallery(); } else { alert(d.error || 'Gagal menghapus'); }\n  }\n\n  window.onclick = function(event){\n    if(event.target == document.getElementById('modal')) closeModal();\n    if(event.target == document.getElementById('vmodal')) closeVisitorModal();\n  }\n\n  renderGallery();\n</script>\n\n</body>\n</html>";
-
-function jsonResponse(obj, status){
-  return new Response(JSON.stringify(obj), {
-    status: status || 200,
-    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
-  });
-}
-
-export default {
-  async fetch(request) {
-    const url = new URL(request.url);
-
-    // Galeri karya (publik: GET list; admin: POST tambah/edit/hapus)
-    if (url.pathname === '/api/karya') {
-      if (request.method === 'GET') {
-        const r = await fetch(API, { method: 'GET' });
-        return new Response(r.body, { status: r.status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
-      }
-      if (request.method === 'POST') {
-        let body = {};
-        try { body = await request.json(); } catch (e) {}
-        if ((body.adminCode || '') !== ADMIN_CODE) {
-          return jsonResponse({ ok: false, error: 'Kode admin salah' }, 403);
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toko Online - Jualan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        if (body.action === 'login') return jsonResponse({ ok: true });
-        const payload = {
-          token: ADMIN_CODE,
-          action: body.action || 'add',
-          id: body.id,
-          judul: body.judul,
-          spek: body.spek,
-          harga: body.harga,
-          gambar: body.gambar,
-          wa: body.wa
-        };
-        const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-        return new Response(r.body, { status: r.status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
-      }
+
+        body {
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 15px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .product {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: 0.3s;
+            border: 1px solid #ecf0f1;
+            text-align: center;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+        }
+
+        .product img {
+            width: 100%;
+            max-height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #ecf0f1;
+        }
+
+        .product h3 {
+            margin: 15px 0 8px;
+            color: #2c3e50;
+            font-size: 1.2rem;
+        }
+
+        .product .price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #e67e22;
+            margin: 8px 0;
+        }
+
+        .product .desc {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-buy {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .btn-buy:hover {
+            background: #219150;
+            transform: scale(1.02);
+        }
+
+        .cart-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fef9e7;
+            border-radius: 16px;
+            border-left: 6px solid #f1c40f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .cart-info span {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .cart-info .total {
+            color: #e67e22;
+            font-size: 1.5rem;
+        }
+
+        #cart-count {
+            background: #e67e22;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            margin-left: 10px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🛍️ Toko Jaya</h1>
+    <div class="subtitle">Belanja kebutuhan sehari-hari dengan mudah</div>
+
+    <!-- Daftar Produk -->
+    <div class="products" id="product-list"></div>
+
+    <!-- Keranjang -->
+    <div class="cart-info">
+        <span>🛒 Keranjang <span id="cart-count">0</span></span>
+        <span>Total: <span class="total" id="total-price">Rp0</span></span>
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Toko Jaya - Dibuat dengan ❤️
+    </div>
+</div>
+
+<script>
+    // Data produk (bisa ditambah sendiri)
+    const products = [
+        { id: 1, name: "Beras Premium 5kg", price: 75000, image: "https://via.placeholder.com/220x160?text=Beras", desc: "Beras pulen berkualitas" },
+        { id: 2, name: "Minyak Goreng 2L", price: 32000, image: "https://via.placeholder.com/220x160?text=Minyak", desc: "Minyak goreng kemasan" },
+        { id: 3, name: "Gula Pasir 1kg", price: 18000, image: "https://via.placeholder.com/220x160?text=Gula", desc: "Gula pasir putih manis" },
+        { id: 4, name: "Telur Ayam 1 tray", price: 28000, image: "https://via.placeholder.com/220x160?text=Telur", desc: "Telur ayam negeri segar" },
+        { id: 5, name: "Sabun Mandi 4 pcs", price: 22000, image: "https://via.placeholder.com/220x160?text=Sabun", desc: "Sabun wangi tahan lama" },
+        { id: 6, name: "Shampo 200ml", price: 35000, image: "https://via.placeholder.com/220x160?text=Shampo", desc: "Shampo anti ketombe" }
+    ];
+
+    let cart = [];
+
+    // Render produk ke halaman
+    function renderProducts() {
+        const container = document.getElementById('product-list');
+        container.innerHTML = '';
+        products.forEach(p => {
+            const div = document.createElement('div');
+            div.className = 'product';
+            div.innerHTML = `
+                <img src="${p.image}" alt="${p.name}" />
+                <h3>${p.name}</h3>
+                <div class="price">Rp${p.price.toLocaleString()}</div>
+                <div class="desc">${p.desc}</div>
+                <button class="btn-buy" data-id="${p.id}">+ Tambah ke Keranjang</button>
+            `;
+            container.appendChild(div);
+        });
+
+        // Event listener untuk semua tombol beli
+        document.querySelectorAll('.btn-buy').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = parseInt(this.dataset.id);
+                addToCart(id);
+            });
+        });
     }
 
-    // Data pengunjung (publik, biar KamOj bisa DM balik)
-    if (url.pathname === '/api/visitor' && request.method === 'POST') {
-      let body = {};
-      try { body = await request.json(); } catch (e) {}
-      const r = await fetch(API, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'visitor-add', nama: body.nama || '', wa: body.wa || '', karya: body.karya || '' })
-      });
-      return new Response(r.body, { status: r.status, headers: { 'Content-Type': 'application/json' } });
+    // Tambah ke keranjang
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+
+        const existing = cart.find(item => item.id === productId);
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            cart.push({ ...product, qty: 1 });
+        }
+
+        updateCartUI();
     }
 
-    // Halaman utama
-    return new Response(HTML, { headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
-  }
-};
+    // Update tampilan keranjang
+    function updateCartUI() {
+        const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+        document.getElementById('cart-count').textContent = totalQty;
+        document.getElementById('total-price').textContent = 'Rp' + totalPrice.toLocaleString();
+    }
+
+    // Jalankan
+    renderProducts();
+</script>
+
+</body>
+  </html>
