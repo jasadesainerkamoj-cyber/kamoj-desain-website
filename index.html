@@ -1,18 +1,74 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jasa Ojol Kamora</title>
-<style>body{font-family:Arial;background:#f1f5f9;padding:20px}.box{background:white;padding:20px;border-radius:12px;max-width:400px;margin:auto;box-shadow:0 4px 10px rgba(0,0,0,0.1)}h2{text-align:center;color:#16a34a}input,select,textarea{width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:8px}button{width:100%;padding:12px;background:#25D366;color:white;border:none;border-radius:8px;font-size:16px;font-weight:bold}</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ojol Kamora - Pesan Ojek Online</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JX4WR4MCRE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JX4WR4MCRE');
+</script>
+
+<style>
+body{font-family:Arial;background:#f0f0f0;padding:20px}
+.box{background:white;padding:20px;border-radius:12px;max-width:400px;margin:auto;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
+h2{text-align:center;color:#16a34a}
+label{display:block;margin-top:10px;font-weight:bold}
+input,select,textarea{width:100%;padding:10px;margin-top:5px;border:1px solid #ccc;border-radius:8px}
+button{width:100%;padding:12px;background:#25D366;color:white;border:none;border-radius:8px;font-size:16px;font-weight:bold;margin-top:15px;cursor:pointer}
+button:hover{background:#1da851}
+</style>
 </head>
-<body><div class="box"><h2>🛵 Jasa Ojol Kamora</h2>
-<form id="ojolForm">
-<label>Layanan</label><select id="layanan"><option>Ojek Penumpang</option><option>Antar Barang</option></select>
-<label>Nama</label><input type="text" id="nama" required>
-<label>No WA</label><input type="tel" id="hp" required>
-<label>Jemput</label><textarea id="jemput" required></textarea>
-<label>Tujuan</label><textarea id="tujuan" required></textarea>
-<button type="submit">📲 PESAN SEKARANG</button>
-</form></div>
-<script>document.getElementById('ojolForm').addEventListener('submit',function(e){e.preventDefault();let p=`*ORDER BARU OJEK KAMORA*%0A%0A*Layanan*: ${layanan.value}%0A*Nama*: ${nama.value}%0A*No WA*: ${hp.value}%0A*Jemput*: ${jemput.value}%0A*Tujuan*: ${tujuan.value}`;window.open(`https://wa.me/628134595671?text=${p}`,'_blank');this.reset()})</script>
-</body></html>
+<body>
+<div class="box">
+  <h2>🛵 Ojol Kamora</h2>
+  <form id="orderForm">
+    <label>Layanan</label>
+    <select id="layanan">
+      <option>Ojek</option>
+      <option>Antar Makanan</option>
+      <option>Antar Barang</option>
+    </select>
+    
+    <label>Nama</label>
+    <input type="text" id="nama" required>
+    
+    <label>No WhatsApp</label>
+    <input type="text" id="wa" required>
+    
+    <label>Lokasi Jemput</label>
+    <textarea id="jemput" required></textarea>
+    
+    <label>Tujuan</label>
+    <textarea id="tujuan" required></textarea>
+    
+    <button type="submit">PESAN SEKARANG</button>
+  </form>
+</div>
+
+<script>
+document.getElementById("orderForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  let layanan = document.getElementById("layanan").value;
+  let nama = document.getElementById("nama").value;
+  let wa = document.getElementById("wa").value;
+  let jemput = document.getElementById("jemput").value;
+  let tujuan = document.get.getElementById("tujuan").value;
+  
+  let pesan = `Halo Ojol Kamora%0A%0A`+
+              `Layanan: ${layanan}%0A`+
+              `Nama: ${nama}%0A`+
+              `WA: ${wa}%0A`+
+              `Jemput: ${jemput}%0A`+
+              `Tujuan: ${tujuan}`;
+  
+  window.open(`https://wa.me/628134595671?text=${pesan}`, "_blank");
+});
+</script>
+</body>
+</html>
