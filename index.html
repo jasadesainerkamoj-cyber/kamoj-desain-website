@@ -21,9 +21,6 @@ button{width:100%;padding:12px;background:#25D366;color:white;border:none;border
 button:hover{background:#1da851} 
 .btn-driver{background:#1677FF;} 
 .btn-driver:hover{background:#0d5bd9;}
-.dana-box{border:2px dashed #1677FF; background:#E6F7FF; text-align:center; padding:15px;}
-.dana-box h3{color:#1677FF; margin:0 0 10px 0;}
-.dana-box img{width:220px; height:220px; border-radius:8px;}
 .hidden{display:none;} 
 </style> 
 </head> 
@@ -63,7 +60,6 @@ button:hover{background:#1da851}
 <!-- FORM DRIVER -->
 <div class="box hidden" id="formDriver">
 <h2>🚨 Daftar Driver KamOj</h2>
-<p style="font-size:14px;">Isi data. Topup awal Rp20.000 untuk saldo aktif</p>
 <form id="driverForm">
 <label>Nama Lengkap</label>
 <input type="text" id="namaDriver" required>
@@ -79,65 +75,4 @@ button:hover{background:#1da851}
 <label>No Plat</label>
 <input type="text" id="plat" required>
 <button type="submit">KIRIM PENDAFTARAN</button>
-<button type="button" onclick="showMenu()">⬅️ Kembali</button>
-</form>
-</div>
-
-<!-- BOX QRIS -->
-<div class="box dana-box">
-  <h3>💙 BAYAR VIA QRIS</h3>
-  <p>Untuk Topup Driver & Pembayaran</p>
-  <img src="assets/qr-dana-kamoj.jpg" alt="QRIS Ojol Kamora">
-  <p><b>Atas Nama: KamOj</b></p>
-  <p style="font-size:12px;">Setelah bayar, kirim bukti ke WA Admin</p>
-</div>
-
-<script> 
-function showForm(type){
-  document.getElementById('menu').classList.add('hidden');
-  if(type == 'customer') document.getElementById('formCustomer').classList.remove('hidden');
-  if(type == 'driver') document.getElementById('formDriver').classList.remove('hidden');
-}
-function showMenu(){
-  document.getElementById('formCustomer').classList.add('hidden');
-  document.getElementById('formDriver').classList.add('hidden');
-  document.getElementById('menu').classList.remove('hidden');
-}
-
-// Kirim Form Customer ke WA
-document.getElementById("orderForm").addEventListener("submit", function(e){ 
-e.preventDefault(); 
-let layanan = document.getElementById("layanan").value; 
-let nama = document.getElementById("nama").value; 
-let wa = document.getElementById("wa").value; 
-let jemput = document.getElementById("jemput").value; 
-let tujuan = document.getElementById("tujuan").value; 
-let pesan = `HALO ADMIN KAMOJ%0A%0A*PESANAN BARU*%0A`+ 
-`Layanan: ${layanan}%0A`+ 
-`Nama: ${nama}%0A`+ 
-`WA: ${wa}%0A`+ 
-`Jemput: ${jemput}%0A`+ 
-`Tujuan: ${tujuan}`; 
-window.open(`https://wa.me/628134595671?text=${pesan}`, "_blank"); 
-}); 
-
-// Kirim Form Driver ke WA
-document.getElementById("driverForm").addEventListener("submit", function(e){ 
-e.preventDefault(); 
-let nama = document.getElementById("namaDriver").value; 
-let wa = document.getElementById("waDriver").value; 
-let alamat = document.getElementById("alamatDriver").value; 
-let kendaraan = document.getElementById("kendaraan").value; 
-let plat = document.getElementById("plat").value; 
-let pesan = `HALO ADMIN KAMOJ%0A%0A*PENDAFTARAN DRIVER BARU*%0A`+ 
-`Nama: ${nama}%0A`+ 
-`WA: ${wa}%0A`+ 
-`Alamat: ${alamat}%0A`+ 
-`Kendaraan: ${kendaraan}%0A`+ 
-`Plat: ${plat}%0A%0A`+
-`Saya sudah siap Topup Rp20.000`; 
-window.open(`https://wa.me/628134595671?text=${pesan}`, "_blank"); 
-}); 
-</script> 
-</body> 
-</html>
+<button type="button
