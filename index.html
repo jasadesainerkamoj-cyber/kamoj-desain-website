@@ -3,76 +3,35 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<title>Ojol Kamora - Pesan Ojek Online</title> 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JX4WR4MCRE"></script> 
-<script> 
-window.dataLayer = window.dataLayer || []; 
-function gtag(){dataLayer.push(arguments);} 
-gtag('js', new Date()); 
-gtag('config', 'G-JX4WR4MCRE'); 
-</script> 
+<title>KamOj - Ojol Kamora</title> 
 <style> 
 body{font-family:Arial;background:#f0f0f0;padding:20px} 
-.box{background:white;padding:20px;border-radius:12px;max-width:400px;margin:auto;box-shadow:0 4px 10px rgba(0,0,0,0.1); margin-bottom:20px;} 
+.box{background:white;padding:20px;border-radius:12px;max-width:400px;margin:auto} 
 h2{text-align:center;color:#16a34a} 
-label{display:block;margin-top:10px;font-weight:bold} 
-input,select,textarea{width:100%;padding:10px;margin-top:5px;border:1px solid #ccc;border-radius:8px} 
-button{width:100%;padding:12px;background:#25D366;color:white;border:none;border-radius:8px;font-size:16px;font-weight:bold;margin-top:15px;cursor:pointer} 
-button:hover{background:#1da851} 
+button{width:100%;padding:15px;background:#25D366;color:white;border:none;border-radius:8px;font-size:16px;font-weight:bold;margin-top:10px;cursor:pointer} 
 .btn-driver{background:#1677FF;} 
-.btn-driver:hover{background:#0d5bd9;}
-.hidden{display:none;} 
 </style> 
 </head> 
 <body> 
 
-<!-- MENU PILIHAN -->
-<div class="box" id="menu">
+<div class="box">
   <h2>🛵 KamOj - Ojol Kamora</h2>
-  <p style="text-align:center; font-size:14px;">Sistem Ojek Online Pertama di Kamora</p>
-  <button onclick="showForm('customer')">PESAN OJEK / ANTAR</button>
-  <button class="btn-driver" onclick="showForm('driver')">DAFTAR JADI DRIVER</button>
+  <p style="text-align:center;">Sistem Ojek Online Pertama di Kamora</p>
+  
+  <button onclick="pesanOjek()">PESAN OJEK / ANTAR</button>
+  <button class="btn-driver" onclick="daftarDriver()">DAFTAR JADI DRIVER</button>
 </div>
 
-<!-- FORM CUSTOMER -->
-<div class="box hidden" id="formCustomer"> 
-<h2>Pesan Layanan</h2> 
-<form id="orderForm"> 
-<label>Layanan</label> 
-<select id="layanan"> 
-<option>Ojek</option> 
-<option>Antar Makanan</option> 
-<option>Antar Barang</option> 
-</select> 
-<label>Nama</label> 
-<input type="text" id="nama" required> 
-<label>No WhatsApp</label> 
-<input type="text" id="wa" required> 
-<label>Lokasi Jemput</label> 
-<textarea id="jemput" required></textarea> 
-<label>Tujuan</label> 
-<textarea id="tujuan" required></textarea> 
-<button type="submit">KIRIM KE ADMIN</button> 
-<button type="button" onclick="showMenu()">⬅️ Kembali</button>
-</form> 
-</div> 
+<script> 
+function pesanOjek(){
+  let pesan = "HALO ADMIN KAMOJ%0A%0A*SAYA MAU PESAN OJEK*";
+  window.open("https://wa.me/628134595671?text=" + pesan, "_blank"); 
+}
 
-<!-- FORM DRIVER -->
-<div class="box hidden" id="formDriver">
-<h2>🚨 Daftar Driver KamOj</h2>
-<form id="driverForm">
-<label>Nama Lengkap</label>
-<input type="text" id="namaDriver" required>
-<label>No WhatsApp</label>
-<input type="text" id="waDriver" required>
-<label>Alamat</label>
-<textarea id="alamatDriver" required></textarea>
-<label>Jenis Kendaraan</label>
-<select id="kendaraan">
-<option>Motor</option>
-<option>Mobil</option>
-</select>
-<label>No Plat</label>
-<input type="text" id="plat" required>
-<button type="submit">KIRIM PENDAFTARAN</button>
-<button type="button
+function daftarDriver(){
+  let pesan = "HALO ADMIN KAMOJ%0A%0A*SAYA MAU DAFTAR JADI DRIVER*";
+  window.open("https://wa.me/628134595671?text=" + pesan, "_blank"); 
+}
+</script> 
+</body> 
+</html>
