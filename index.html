@@ -1,37 +1,78 @@
-<!DOCTYPE html> 
-<html lang="id"> 
-<head> 
-<meta charset="UTF-8"> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<title>KamOj - Ojol Kamora</title> 
-<style> 
-body{font-family:Arial;background:#f0f0f0;padding:20px} 
-.box{background:white;padding:20px;border-radius:12px;max-width:400px;margin:auto} 
-h2{text-align:center;color:#16a34a} 
-button{width:100%;padding:15px;background:#25D366;color:white;border:none;border-radius:8px;font-size:16px;font-weight:bold;margin-top:10px;cursor:pointer} 
-.btn-driver{background:#1677FF;} 
-</style> 
-</head> 
-<body> 
 
-<div class="box">
-  <h2>🛵 KamOj - Ojol Kamora</h2>
-  <p style="text-align:center;">Sistem Ojek Online Pertama di Kamora</p>
-  
-  <button onclick="pesanOjek()">PESAN OJEK / ANTAR</button>
-  <button class="btn-driver" onclick="daftarDriver()">DAFTAR JADI DRIVER</button>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KamOj AI - Jasa Desain</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#0f172a;color:#fff}
+header{background:#e11d48;padding:20px;text-align:center}
+header h1{margin:0}
+.container{padding:20px;max-width:800px;margin:auto}
+.btn{background:#e11d48;color:#fff;padding:12px 20px;border:none;border-radius:8px;text-decoration:none;display:inline-block;margin-top:10px;font-weight:bold}
+.chatbox{background:#1e293b;padding:15px;border-radius:10px;margin-top:20px}
+#chatlog{height:250px;overflow-y:auto;background:#0f172a;padding:10px;border-radius:5px;margin-bottom:10px;border:1px solid #334155}
+input{width:68%;padding:10px;border:none;border-radius:5px;background:#334155;color:#fff}
+button{padding:10px 15px;background:#e11d48;color:#fff;border:none;border-radius:5px;cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+  <h1>KamOj AI Design</h1>
+  <p>Chat sama Asisten KamOj 🤖</p>
+</header>
+
+<div class="container">
+  <h2>Layanan Kami</h2>
+  <ul><li>Desain Logo</li><li>Banner & Poster</li><li>Feed Instagram</li><li>Kemasan Produk</li></ul>
+  <a href="https://wa.me/628134595671" class="btn">Chat Admin di WhatsApp</a>
+
+  <div class="chatbox">
+    <h3>Asisten KamOj AI</h3>
+    <div id="chatlog"><b>Asisten KamOj:</b> Halo kak! Mau tanya jasa desain apa? 😊<br></div>
+    <input type="text" id="userInput" placeholder="Tanya harga, proses, contoh..." onkeypress="if(event.key=='Enter')kirim()">
+    <button onclick="kirim()">Kirim</button>
+  </div>
 </div>
 
-<script> 
-function pesanOjek(){
-  let pesan = "HALO ADMIN KAMOJ%0A%0A*SAYA MAU PESAN OJEK*";
-  window.open("https://wa.me/628134595671?text=" + pesan, "_blank"); 
-}
+<script>
+const API_KEY = "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";
 
-function daftarDriver(){
-  let pesan = "HALO ADMIN KAMOJ%0A%0A*SAYA MAU DAFTAR JADI DRIVER*";
-  window.open("https://wa.me/628134595671?text=" + pesan, "_blank"); 
+async function kirim(){
+  let input = document.getElementById("userInput").value;
+  let log = document.getElementById("chatlog");
+  if(input=="") return;
+  log.innerHTML += "<b>Kamu:</b> "+input+"<br>";
+  document.getElementById("userInput").value="";
+  log.innerHTML += "<b>Asisten KamOj:</b> <i>sedang mengetik...</i><br>";
+  log.scrollTop = log.scrollHeight;
+
+  const prompt = `Kamu adalah Asisten CS bernama "Asisten KamOj" untuk jasa desain "KamOj".
+  Aturan: Jawab ramah, singkat, bahasa Indonesia santai.
+  Layanan: Logo, Banner, Poster, Feed IG, Kemasan.
+  Kalau ditanya harga/proses/pesan, akhiri dengan: "Boleh lanjut chat ke WA Admin: 08134595671 ya kak biar langsung diproses"
+  Pertanyaan klien: ${input}`;
+
+  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + API_KEY
+    },
+    body: JSON.stringify({
+      model: "llama-3.1-8b-instant",
+      messages: [{role: "user", content: prompt}],
+      temperature: 0.7
+    })
+  });
+  const data = await res.json();
+  let jawaban = data.choices[0].message.content;
+
+  log.innerHTML = log.innerHTML.replace("<b>Asisten KamOj:</b> <i>sedang mengetik...</i><br>", "");
+  log.innerHTML += "<b>Asisten KamOj:</b> "+jawaban+"<br>";
+  log.scrollTop = log.scrollHeight;
 }
-</script> 
-</body> 
+</script>
+</body>
 </html>
