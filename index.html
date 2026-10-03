@@ -1,78 +1,236 @@
-
-<!DOCTYPE html>
+DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KamOj AI - Jasa Desain</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KamOj Desain - Jasa desain jersey, kaos, poster, dan logo</title>
+<meta name="description" content="KamOj Desain: jasa desain grafis untuk jersey, kaos, poster, logo, dan company profile. Revisi 2x, DP 50%, pesan lewat WhatsApp. Graphic design services for jerseys, shirts, posters, and logos.">
+<meta property="og:title" content="KamOj Desain">
+<meta property="og:description" content="Desain jersey, kaos, poster, dan logo. Pesan lewat WhatsApp.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#050505">
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#0f172a;color:#fff}
-header{background:#e11d48;padding:20px;text-align:center}
-header h1{margin:0}
-.container{padding:20px;max-width:800px;margin:auto}
-.btn{background:#e11d48;color:#fff;padding:12px 20px;border:none;border-radius:8px;text-decoration:none;display:inline-block;margin-top:10px;font-weight:bold}
-.chatbox{background:#1e293b;padding:15px;border-radius:10px;margin-top:20px}
-#chatlog{height:250px;overflow-y:auto;background:#0f172a;padding:10px;border-radius:5px;margin-bottom:10px;border:1px solid #334155}
-input{width:68%;padding:10px;border:none;border-radius:5px;background:#334155;color:#fff}
-button{padding:10px 15px;background:#e11d48;color:#fff;border:none;border-radius:5px;cursor:pointer}
+:root{
+  --bg:#050505; --panel:#141416; --line:#2a2a2e;
+  --red:#d4141f; --red-hot:#ff2b3a; --text:#f2f2f2; --muted:#a0a0a8;
+  --display:Impact,Haettenschweiler,"Arial Narrow Bold","Roboto Condensed",system-ui,sans-serif;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;font-size:16px;
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--red-hot);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:.5px;line-height:1.05}
+h2{font-size:clamp(30px,6vw,46px);margin-bottom:10px}
+h3{font-size:24px;margin-bottom:6px}
+p.lead{color:var(--muted);max-width:56ch;margin-bottom:28px}
+section{padding:64px 0;border-top:1px solid var(--line)}
+
+/* bar atas */
+.top{position:sticky;top:0;z-index:10;background:rgba(5,5,5,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{font-family:var(--display);font-size:26px;text-decoration:none;font-style:italic}
+.brand b{color:var(--red-hot);font-weight:400}
+.lang{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--muted);padding:7px 12px;font:600 13px var(--body);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--red);color:#fff}
+
+/* hero: satu momen utama, garis diagonal ala jersey */
+.hero{position:relative;overflow:hidden;padding:72px 0 88px;border-top:0}
+.hero::before,.hero::after{content:"";position:absolute;top:-20%;bottom:-20%;transform:skewX(-18deg);
+  background:var(--red);right:-6%;width:26%;animation:slash .9s cubic-bezier(.2,.8,.2,1) both}
+.hero::after{right:22%;width:7%;background:var(--red-hot);animation-delay:.12s}
+@keyframes slash{from{transform:translateX(120%) skewX(-18deg)}to{transform:translateX(0) skewX(-18deg)}}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{font-size:clamp(54px,15vw,132px);font-style:italic;text-shadow:3px 3px 0 #000}
+.hero h1 b{color:var(--red-hot);font-weight:400}
+.hero .tag{font-size:clamp(20px,4vw,28px);font-family:var(--display);margin:6px 0 14px}
+.hero p{max-width:46ch;color:#d8d8dc;margin-bottom:26px;text-shadow:0 1px 6px #000}
+.btn{display:inline-block;background:var(--red);color:#fff;text-decoration:none;font-weight:700;
+  padding:14px 26px;border-radius:6px;border:2px solid var(--red);transition:background .15s,border-color .15s}
+.btn:hover{background:var(--red-hot);border-color:var(--red-hot)}
+.btn.ghost{background:transparent;border-color:var(--text);margin-left:10px}
+.btn.ghost:hover{background:var(--text);color:#000;border-color:var(--text)}
+
+/* paket */
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--red);padding:22px;border-radius:4px;
+  display:flex;flex-direction:column;gap:6px}
+.card .price{font-family:var(--display);font-size:28px;color:var(--red-hot);margin-top:auto;padding-top:10px}
+.card p{color:var(--muted);font-size:15px}
+.card a.order{margin-top:10px;font-weight:700;color:var(--text);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--red)}
+
+/* galeri: ganti .tile dengan <img> karyamu */
+.gallery{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+.tile{position:relative;aspect-ratio:1/1;border-radius:4px;overflow:hidden;border:1px solid var(--line);
+  background:repeating-linear-gradient(-45deg,#1a1a1d 0 14px,#0f0f11 14px 28px)}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;font-size:14px;font-weight:600;
+  background:linear-gradient(transparent,rgba(0,0,0,.85))}
+
+/* cara kerja */
+.steps{list-style:none;counter-reset:s;display:grid;gap:14px;max-width:640px}
+.steps li{counter-increment:s;display:flex;gap:16px;align-items:flex-start}
+.steps li::before{content:counter(s);flex:none;width:36px;height:36px;border-radius:50%;background:var(--red);
+  display:grid;place-items:center;font-family:var(--display);font-size:20px}
+.rules{margin-top:30px;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.rule{border:1px solid var(--line);padding:16px 18px;border-radius:4px;background:var(--panel)}
+.rule strong{display:block;font-family:var(--display);font-size:30px;color:var(--red-hot);font-weight:400}
+
+/* kontak */
+.cta{text-align:left}
+.cta p{color:var(--muted);margin-bottom:22px;max-width:50ch}
+footer{border-top:1px solid var(--line);padding:28px 0 36px;color:var(--muted);font-size:14px}
+
+/* tombol WhatsApp melayang */
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;background:#1fa855;color:#fff;
+  text-decoration:none;font-weight:700;padding:13px 20px;border-radius:999px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+.fab:hover{background:#25c261}
+
+@media (max-width:560px){.btn.ghost{margin:10px 0 0}.hero::before{width:34%}}
+@media (prefers-reduced-motion:reduce){.hero::before,.hero::after{animation:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<header>
-  <h1>KamOj AI Design</h1>
-  <p>Chat sama Asisten KamOj 🤖</p>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Kam<b>Oj</b></a>
+    <div class="lang" role="group" aria-label="Bahasa / Language">
+      <button type="button" data-set="id" aria-pressed="true">ID</button>
+      <button type="button" data-set="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
 </header>
 
-<div class="container">
-  <h2>Layanan Kami</h2>
-  <ul><li>Desain Logo</li><li>Banner & Poster</li><li>Feed Instagram</li><li>Kemasan Produk</li></ul>
-  <a href="https://wa.me/628134595671" class="btn">Chat Admin di WhatsApp</a>
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <h1>Kam<b>Oj</b></h1>
+      <p class="tag" data-id="Jasa desain jersey, kaos, poster, dan logo" data-en="Design for jerseys, shirts, posters, and logos">Jasa desain jersey, kaos, poster, dan logo</p>
+      <p data-id="Kirim ide kamu lewat WhatsApp. Kami buatkan desainnya, kamu revisi dua kali, lalu file akhir dikirim siap pakai."
+         data-en="Send your idea on WhatsApp. We design it, you get two rounds of revisions, and the final files arrive ready to use.">Kirim ide kamu lewat WhatsApp. Kami buatkan desainnya, kamu revisi dua kali, lalu file akhir dikirim siap pakai.</p>
+      <a class="btn wa" href="#" data-id="Pesan desain" data-en="Order a design"
+         data-msg-id="Halo KamOj, saya mau pesan desain." data-msg-en="Hi KamOj, I'd like to order a design.">Pesan desain</a>
+      <a class="btn ghost" href="#paket" data-id="Lihat paket" data-en="See packages">Lihat paket</a>
+    </div>
+  </section>
 
-  <div class="chatbox">
-    <h3>Asisten KamOj AI</h3>
-    <div id="chatlog"><b>Asisten KamOj:</b> Halo kak! Mau tanya jasa desain apa? 😊<br></div>
-    <input type="text" id="userInput" placeholder="Tanya harga, proses, contoh..." onkeypress="if(event.key=='Enter')kirim()">
-    <button onclick="kirim()">Kirim</button>
-  </div>
-</div>
+  <section id="paket">
+    <div class="wrap">
+      <h2 data-id="Paket desain" data-en="Design packages">Paket desain</h2>
+      <p class="lead" data-id="Harga awal sudah termasuk 2x revisi. Harga final tergantung tingkat kerumitan." data-en="Starting prices include 2 revisions. Final price depends on complexity.">Harga awal sudah termasuk 2x revisi. Harga final tergantung tingkat kerumitan.</p>
+      <div class="grid">
+        <article class="card">
+          <h3 data-id="Poster dan materi promo" data-en="Posters and promo materials">Poster dan materi promo</h3>
+          <p data-id="Poster, banner, dan konten promosi untuk usaha." data-en="Posters, banners, and promo content for your business.">Poster, banner, dan konten promosi untuk usaha.</p>
+          <div class="price" data-id="Mulai Rp50.000" data-en="From Rp50,000">Mulai Rp50.000</div>
+          <a class="order wa" href="#" data-id="Pesan paket ini" data-en="Order this package"
+             data-msg-id="Halo KamOj, saya mau pesan desain poster/materi promo." data-msg-en="Hi KamOj, I'd like to order a poster/promo design.">Pesan paket ini</a>
+        </article>
+        <article class="card">
+          <h3 data-id="Kaos dan merchandise" data-en="Shirts and merchandise">Kaos dan merchandise</h3>
+          <p data-id="Desain kaos, topi, dan merchandise. Khusus jasa desain, bukan produksi." data-en="Designs for shirts, caps, and merchandise. Design service only, not production.">Desain kaos, topi, dan merchandise. Khusus jasa desain, bukan produksi.</p>
+          <div class="price" data-id="Mulai Rp50.000" data-en="From Rp50,000">Mulai Rp50.000</div>
+          <a class="order wa" href="#" data-id="Pesan paket ini" data-en="Order this package"
+             data-msg-id="Halo KamOj, saya mau pesan desain kaos/merchandise." data-msg-en="Hi KamOj, I'd like to order a shirt/merchandise design.">Pesan paket ini</a>
+        </article>
+        <article class="card">
+          <h3 data-id="Jersey tim" data-en="Team jerseys">Jersey tim</h3>
+          <p data-id="Desain jersey untuk tim olahraga, komunitas, dan gaming." data-en="Jersey designs for sports teams, communities, and gaming squads.">Desain jersey untuk tim olahraga, komunitas, dan gaming.</p>
+          <div class="price" data-id="Tanya harga" data-en="Ask for a quote">Tanya harga</div>
+          <a class="order wa" href="#" data-id="Pesan paket ini" data-en="Order this package"
+             data-msg-id="Halo KamOj, saya mau tanya harga desain jersey." data-msg-en="Hi KamOj, I'd like a quote for a jersey design.">Pesan paket ini</a>
+        </article>
+        <article class="card">
+          <h3 data-id="Logo dan company profile" data-en="Logos and company profiles">Logo dan company profile</h3>
+          <p data-id="Identitas visual dan profil perusahaan untuk usaha kamu." data-en="Visual identity and company profiles for your business.">Identitas visual dan profil perusahaan untuk usaha kamu.</p>
+          <div class="price" data-id="Tanya harga" data-en="Ask for a quote">Tanya harga</div>
+          <a class="order wa" href="#" data-id="Pesan paket ini" data-en="Order this package"
+             data-msg-id="Halo KamOj, saya mau tanya harga logo/company profile." data-msg-en="Hi KamOj, I'd like a quote for a logo/company profile.">Pesan paket ini</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="karya">
+    <div class="wrap">
+      <h2 data-id="Karya kami" data-en="Our work">Karya kami</h2>
+      <p class="lead" data-id="Beberapa contoh hasil desain KamOj." data-en="A few examples of KamOj designs.">Beberapa contoh hasil desain KamOj.</p>
+      <!-- GANTI: letakkan gambar di folder img/ lalu isi di dalam .tile, contoh:
+           <figure class="tile"><img src="img/jersey-1.jpg" alt="Desain jersey merah hitam" loading="lazy"><figcaption>Jersey tim</figcaption></figure> -->
+      <div class="gallery">
+        <figure class="tile"><figcaption data-id="Jersey tim" data-en="Team jersey">Jersey tim</figcaption></figure>
+        <figure class="tile"><figcaption data-id="Desain kaos" data-en="Shirt design">Desain kaos</figcaption></figure>
+        <figure class="tile"><figcaption data-id="Poster promo" data-en="Promo poster">Poster promo</figcaption></figure>
+        <figure class="tile"><figcaption data-id="Company profile" data-en="Company profile">Company profile</figcaption></figure>
+        <figure class="tile"><figcaption data-id="Merchandise" data-en="Merchandise">Merchandise</figcaption></figure>
+        <figure class="tile"><figcaption data-id="Logo" data-en="Logo">Logo</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="cara">
+    <div class="wrap">
+      <h2 data-id="Cara pesan" data-en="How to order">Cara pesan</h2>
+      <ol class="steps">
+        <li><span data-id="Chat kami di WhatsApp dan ceritakan kebutuhan desainmu." data-en="Message us on WhatsApp and tell us what you need.">Chat kami di WhatsApp dan ceritakan kebutuhan desainmu.</span></li>
+        <li><span data-id="Sepakati harga, lalu bayar DP 50%. Kami kirim invoice resmi." data-en="Agree on the price and pay a 50% down payment. We send an official invoice.">Sepakati harga, lalu bayar DP 50%. Kami kirim invoice resmi.</span></li>
+        <li><span data-id="Kami buat desainnya dan kirim hasil untuk kamu cek." data-en="We create the design and send it for your review.">Kami buat desainnya dan kirim hasil untuk kamu cek.</span></li>
+        <li><span data-id="Revisi sampai 2 kali, lalu lunasi sisanya dan terima file akhir." data-en="Up to 2 revisions, then pay the balance and receive the final files.">Revisi sampai 2 kali, lalu lunasi sisanya dan terima file akhir.</span></li>
+      </ol>
+      <div class="rules">
+        <div class="rule"><strong data-id="DP 50%" data-en="50% deposit">DP 50%</strong>
+          <span data-id="Dibayar di awal sebelum pengerjaan dimulai." data-en="Paid upfront before work begins.">Dibayar di awal sebelum pengerjaan dimulai.</span></div>
+        <div class="rule"><strong data-id="Revisi 2x" data-en="2 revisions">Revisi 2x</strong>
+          <span data-id="Perubahan kecil seperti warna, teks, dan ukuran. Ganti konsep total dihitung order baru." data-en="Small changes like colors, text, and size. A full concept change counts as a new order.">Perubahan kecil seperti warna, teks, dan ukuran. Ganti konsep total dihitung order baru.</span></div>
+        <div class="rule"><strong data-id="File siap pakai" data-en="Ready-to-use files">File siap pakai</strong>
+          <span data-id="Hasil akhir dikirim dalam format PNG dan file kerja bila diminta." data-en="Final delivery in PNG, plus working files on request.">Hasil akhir dikirim dalam format PNG dan file kerja bila diminta.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontak" class="cta">
+    <div class="wrap">
+      <h2 data-id="Mulai proyekmu" data-en="Start your project">Mulai proyekmu</h2>
+      <p data-id="Ceritakan idemu. Kami balas lewat WhatsApp secepatnya." data-en="Tell us your idea. We'll reply on WhatsApp as soon as we can.">Ceritakan idemu. Kami balas lewat WhatsApp secepatnya.</p>
+      <a class="btn wa" href="#" data-id="Chat di WhatsApp" data-en="Chat on WhatsApp"
+         data-msg-id="Halo KamOj, saya mau pesan desain." data-msg-en="Hi KamOj, I'd like to order a design.">Chat di WhatsApp</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">KamOj Desain. <span data-id="Jasa desain grafis dari Timika, Papua." data-en="Graphic design services from Timika, Papua.">Jasa desain grafis dari Timika, Papua.</span></div>
+</footer>
+
+<a class="fab wa" href="#" data-id="Chat WhatsApp" data-en="WhatsApp us"
+   data-msg-id="Halo KamOj, saya mau tanya soal desain." data-msg-en="Hi KamOj, I have a question about design.">Chat WhatsApp</a>
 
 <script>
-const API_KEY = "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";
+// Ubah nomor WhatsApp di sini (format internasional, tanpa + dan spasi)
+const WA_NUMBER = "628134595671";
 
-async function kirim(){
-  let input = document.getElementById("userInput").value;
-  let log = document.getElementById("chatlog");
-  if(input=="") return;
-  log.innerHTML += "<b>Kamu:</b> "+input+"<br>";
-  document.getElementById("userInput").value="";
-  log.innerHTML += "<b>Asisten KamOj:</b> <i>sedang mengetik...</i><br>";
-  log.scrollTop = log.scrollHeight;
-
-  const prompt = `Kamu adalah Asisten CS bernama "Asisten KamOj" untuk jasa desain "KamOj".
-  Aturan: Jawab ramah, singkat, bahasa Indonesia santai.
-  Layanan: Logo, Banner, Poster, Feed IG, Kemasan.
-  Kalau ditanya harga/proses/pesan, akhiri dengan: "Boleh lanjut chat ke WA Admin: 08134595671 ya kak biar langsung diproses"
-  Pertanyaan klien: ${input}`;
-
-  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + API_KEY
-    },
-    body: JSON.stringify({
-      model: "llama-3.1-8b-instant",
-      messages: [{role: "user", content: prompt}],
-      temperature: 0.7
-    })
+function setLang(lang){
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-id][data-en]").forEach(el => { el.textContent = el.dataset[lang]; });
+  document.querySelectorAll("a.wa").forEach(a => {
+    const msg = lang === "en" ? a.dataset.msgEn : a.dataset.msgId;
+    a.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
+    a.target = "_blank"; a.rel = "noopener";
   });
-  const data = await res.json();
-  let jawaban = data.choices[0].message.content;
-
-  log.innerHTML = log.innerHTML.replace("<b>Asisten KamOj:</b> <i>sedang mengetik...</i><br>", "");
-  log.innerHTML += "<b>Asisten KamOj:</b> "+jawaban+"<br>";
-  log.scrollTop = log.scrollHeight;
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.set === lang));
+  try { localStorage.setItem("kamoj-lang", lang); } catch (e) {}
 }
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.set)));
+
+let start = (navigator.language || "id").slice(0, 2) === "id" ? "id" : "en";
+try { const saved = localStorage.getItem("kamoj-lang"); if (saved) start = saved; } catch (e) {}
+setLang(start);
 </script>
 </body>
 </html>
