@@ -72,6 +72,19 @@ section{padding:64px 0;border-top:1px solid var(--line)}
 .tile figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;font-size:14px;font-weight:600;
   background:linear-gradient(transparent,rgba(0,0,0,.85))}
 
+/* tim desainer */
+.team{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.member{background:var(--panel);border:1px solid var(--line);border-top:5px solid var(--red);border-radius:4px;
+  padding:20px;display:flex;flex-direction:column;gap:10px}
+.member h3{margin:0}
+.member .meta{color:var(--muted);font-size:14px}
+.member p{font-size:15px}
+.thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.thumbs div{aspect-ratio:1/1;border-radius:3px;overflow:hidden;
+  background:repeating-linear-gradient(-45deg,#1a1a1d 0 10px,#0f0f11 10px 20px)}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.member .btn{text-align:center;margin-top:auto}
+
 /* cara kerja */
 .steps{list-style:none;counter-reset:s;display:grid;gap:14px;max-width:640px}
 .steps li{counter-increment:s;display:flex;gap:16px;align-items:flex-start}
@@ -174,6 +187,15 @@ footer{border-top:1px solid var(--line);padding:28px 0 36px;color:var(--muted);f
     </div>
   </section>
 
+  <section id="tim">
+    <div class="wrap">
+      <h2 data-id="Tim desainer" data-en="Our designers">Tim desainer</h2>
+      <p class="lead" data-id="Pilih desainer yang cocok dengan kebutuhanmu. Semua pesanan dan pembayaran diurus lewat KamOj."
+         data-en="Pick the designer who fits your needs. All orders and payments go through KamOj.">Pilih desainer yang cocok dengan kebutuhanmu. Semua pesanan dan pembayaran diurus lewat KamOj.</p>
+      <div class="team" id="team"></div>
+    </div>
+  </section>
+
   <section id="cara">
     <div class="wrap">
       <h2 data-id="Cara pesan" data-en="How to order">Cara pesan</h2>
@@ -215,6 +237,69 @@ footer{border-top:1px solid var(--line);padding:28px 0 36px;color:var(--muted);f
 // Ubah nomor WhatsApp di sini (format internasional, tanpa + dan spasi)
 const WA_NUMBER = "628134595671";
 
+/* DATA TIM DESAINER
+   Isi hanya desainer yang sudah memberi izin dan lolos tes kecil.
+   Taruh gambar karya di img/tim/ (huruf kecil, tanpa spasi). Maksimal 3 karya per desainer.
+   Kalau gambar belum ada, kotaknya tampil sebagai pola garis. */
+const TEAM = [
+  { name: "Nama Desainer 1",
+    country: { id: "Negara asal", en: "Country" },
+    skills: { id: "Logo, poster, desain sosial media", en: "Logos, posters, social media design" },
+    tools: "Illustrator, Photoshop",
+    works: ["img/tim/desainer1-1.jpg", "img/tim/desainer1-2.jpg", "img/tim/desainer1-3.jpg"] },
+  { name: "Nama Desainer 2",
+    country: { id: "Negara asal", en: "Country" },
+    skills: { id: "Jersey, kaos, merchandise", en: "Jerseys, shirts, merchandise" },
+    tools: "Illustrator",
+    works: ["img/tim/desainer2-1.jpg", "img/tim/desainer2-2.jpg", "img/tim/desainer2-3.jpg"] }
+];
+
+function renderTeam(lang){
+  const box = document.getElementById("team");
+  if (!box) return;
+  box.textContent = "";
+  TEAM.forEach(m => {
+    const card = document.createElement("article");
+    card.className = "member";
+
+    const h = document.createElement("h3");
+    h.textContent = m.name;
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    meta.textContent = m.country[lang];
+
+    const skills = document.createElement("p");
+    skills.textContent = (lang === "en" ? "Skills: " : "Keahlian: ") + m.skills[lang];
+
+    const tools = document.createElement("p");
+    tools.textContent = (lang === "en" ? "Software: " : "Software: ") + m.tools;
+
+    const thumbs = document.createElement("div");
+    thumbs.className = "thumbs";
+    (m.works || []).slice(0, 3).forEach(src => {
+      const cell = document.createElement("div");
+      const img = document.createElement("img");
+      img.src = src; img.alt = m.name; img.loading = "lazy";
+      img.onerror = () => img.remove();
+      cell.appendChild(img);
+      thumbs.appendChild(cell);
+    });
+
+    const a = document.createElement("a");
+    a.className = "btn";
+    a.target = "_blank"; a.rel = "noopener";
+    a.textContent = lang === "en" ? "Choose this designer" : "Pilih desainer ini";
+    const msg = lang === "en"
+      ? "Hi KamOj, I'd like to work with designer " + m.name + "."
+      : "Halo KamOj, saya mau memakai desainer " + m.name + ".";
+    a.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
+
+    card.append(h, meta, skills, tools, thumbs, a);
+    box.appendChild(card);
+  });
+}
+
 function setLang(lang){
   document.documentElement.lang = lang;
   document.querySelectorAll("[data-id][data-en]").forEach(el => { el.textContent = el.dataset[lang]; });
@@ -224,6 +309,7 @@ function setLang(lang){
     a.target = "_blank"; a.rel = "noopener";
   });
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.set === lang));
+  renderTeam(lang);
   try { localStorage.setItem("kamoj-lang", lang); } catch (e) {}
 }
 document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.set)));
