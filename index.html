@@ -1,4 +1,4 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
@@ -9,6 +9,9 @@ DOCTYPE html>
 <meta property="og:description" content="Desain jersey, kaos, poster, dan logo. Pesan lewat WhatsApp.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#050505">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <style>
 :root{
   --bg:#050505; --panel:#141416; --line:#2a2a2e;
@@ -241,22 +244,20 @@ const WA_NUMBER = "628134595671";
    Isi hanya desainer yang sudah memberi izin dan lolos tes kecil.
    Taruh gambar karya di img/tim/ (huruf kecil, tanpa spasi). Maksimal 3 karya per desainer.
    Kalau gambar belum ada, kotaknya tampil sebagai pola garis. */
-const TEAM = [
-  { name: "Nama Desainer 1",
+const TEAM = [];
+/* Contoh isi (salin ke dalam [ ] di atas, pisahkan dengan koma):
+  { name: "Nama Desainer",
     country: { id: "Negara asal", en: "Country" },
-    skills: { id: "Logo, poster, desain sosial media", en: "Logos, posters, social media design" },
+    skills: { id: "Logo, poster, sosial media", en: "Logos, posters, social media" },
     tools: "Illustrator, Photoshop",
-    works: ["img/tim/desainer1-1.jpg", "img/tim/desainer1-2.jpg", "img/tim/desainer1-3.jpg"] },
-  { name: "Nama Desainer 2",
-    country: { id: "Negara asal", en: "Country" },
-    skills: { id: "Jersey, kaos, merchandise", en: "Jerseys, shirts, merchandise" },
-    tools: "Illustrator",
-    works: ["img/tim/desainer2-1.jpg", "img/tim/desainer2-2.jpg", "img/tim/desainer2-3.jpg"] }
-];
+    works: ["img/tim/desainer1-1.jpg", "img/tim/desainer1-2.jpg", "img/tim/desainer1-3.jpg"] }
+*/
 
 function renderTeam(lang){
   const box = document.getElementById("team");
   if (!box) return;
+  const sec = document.getElementById("tim");
+  if (sec) sec.hidden = TEAM.length === 0;
   box.textContent = "";
   TEAM.forEach(m => {
     const card = document.createElement("article");
