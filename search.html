@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cari Buku - KamOj Lab</title>
+<meta name="theme-color" content="#050505">
+<style>
+:root{--bg:#050505;--panel:#141416;--line:#2a2a2e;--red:#d4141f;--red-hot:#ff2b3a;--text:#f2f2f2;--muted:#a0a0a8;
+  --display:Impact,Haettenschweiler,"Arial Narrow Bold","Roboto Condensed",system-ui,sans-serif;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:16px/1.5 var(--body);
+  padding:env(safe-area-inset-top,0px) 0 calc(24px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid var(--red-hot);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:0 18px}
+header{padding:28px 0 8px}
+h1{font:italic 400 clamp(38px,11vw,64px)/1 var(--display);text-shadow:2px 2px 0 #000}
+h1 b{color:var(--red-hot);font-weight:400}
+.sub{color:var(--muted);margin-top:6px}
+.bar{position:sticky;top:0;z-index:5;background:rgba(5,5,5,.94);backdrop-filter:blur(8px);
+  padding:12px 0;border-bottom:1px solid var(--line);margin-top:14px}
+.box{display:flex;gap:8px}
+input[type=search]{flex:1;min-width:0;background:var(--panel);color:var(--text);border:2px solid var(--line);
+  border-radius:8px;padding:13px 14px;font:inherit;font-size:17px}
+input[type=search]:focus{border-color:var(--red)}
+button,select{font:inherit;color:var(--text)}
+.clear{background:var(--panel);border:2px solid var(--line);border-radius:8px;padding:0 14px;cursor:pointer}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;font-size:14px;color:var(--muted)}
+select{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
+.chip:hover{border-color:var(--red)}
+ul{list-style:none;display:grid;gap:10px;margin-top:14px}
+li{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--red);border-radius:4px;
+  padding:14px 16px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+li .t{overflow-wrap:anywhere}
+li .p{font:400 22px var(--display);color:var(--red-hot);white-space:nowrap}
+mark{background:rgba(255,43,58,.28);color:#fff;border-radius:2px;padding:0 1px}
+.more{display:block;width:100%;margin-top:14px;background:var(--red);border:0;border-radius:8px;padding:14px;font-weight:700;cursor:pointer}
+.more:hover{background:var(--red-hot)}
+.empty{margin-top:28px;color:var(--muted);text-align:center}
+.help{margin-top:26px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:14px}
+.help code{background:var(--panel);padding:1px 6px;border-radius:4px;color:var(--text)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Cari <b>Buku</b></h1>
+    <p class="sub">Mesin pencari mini buatan sendiri. Ketik kata, frasa, atau awalan.</p>
+  </header>
+
+  <div class="bar">
+    <div class="box">
+      <input id="q" type="search" placeholder="Contoh: love, history, Lig*" autocomplete="off" enterkeyhint="search" aria-label="Kata pencarian">
+      <button class="clear" id="clear" type="button" aria-label="Hapus pencarian">Hapus</button>
+    </div>
+    <div class="row">
+      <span id="count" aria-live="polite"></span>
+      <label>Urutkan
+        <select id="sort">
+          <option value="rel">Paling cocok</option>
+          <option value="asc">Harga termurah</option>
+          <option value="desc">Harga termahal</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="chips" id="chips"></div>
+  <ul id="list"></ul>
+  <button class="more" id="more" type="button" hidden>Tampilkan lebih banyak</button>
+  <p class="empty" id="empty" hidden></p>
+
+  <p class="help">Tips: <code>"light in"</code> mencari frasa persis, <code>Lig*</code> mencari awalan,
+    <code>love war</code> mencari judul yang memuat keduanya, <code>love OR war</code> mencari salah satunya.</p>
+</div>
+
+<script>
+/*PURE*/
+function norm(s){ return s.toLowerCase(); }
+function parseQuery(raw){
+  const groups = [[]], re = /"([^"]+)"|(\S+)/g; let m;
+  while ((m = re.exec(raw))) {
+    const cur = groups[groups.length - 1];
+    if (m[1]) { cur.push({ type: "phrase", v: norm(m[1]).trim() }); continue; }
+    if (m[2] === "OR") { if (cur.length) groups.push([]); continue; }
+    if (m[2] === "AND") continue;
+    let w = norm(m[2]).replace(/["]/g, "");
+    if (!w) continue;
+    const prefix = w.endsWith("*");
+    w = w.replace(/\*+$/, "");
+    if (w) cur.push({ type: prefix ? "prefix" : "word", v: w });
+  }
+  return groups.filter(g => g.length);
+}
+function words(t){ return norm(t).split(/[^a-z0-9\u00c0-\u024f]+/).filter(Boolean); }
+function scoreGroup(title, toks){
+  const low = norm(title), ws = words(title); let score = 0;
+  for (const k of toks) {
+    if (k.type === "phrase") {
+      const i = low.indexOf(k.v); if (i < 0) return 0; score += i === 0 ? 5 : 3;
+    } else if (k.type === "prefix") {
+      const i = ws.findIndex(w => w.startsWith(k.v)); if (i < 0) return 0; score += i === 0 ? 4 : 2;
+    } else {
+      const i = ws.indexOf(k.v); if (i < 0) return 0; score += i === 0 ? 5 : 3;
+    }
+  }
+  return score;
+}
+function scoreBook(title, groups){
+  let best = 0;
+  for (const g of groups) best = Math.max(best, scoreGroup(title, g));
+  return best;
+}
+function highlightRanges(title, groups){
+  const toks = groups.flat(), low = norm(title), ranges = [];
+  for (const k of toks) {
+    if (k.type === "phrase") { const i = low.indexOf(k.v); if (i >= 0) ranges.push([i, i + k.v.length]); }
+    else {
+      const re = new RegExp("(^|[^a-z0-9\\u00c0-\\u024f])(" + k.v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + (k.type === "word" ? ")(?![a-z0-9\\u00c0-\\u024f])" : ")"), "g");
+      let m; while ((m = re.exec(low))) { const s = m.index + m[1].length; ranges.push([s, s + m[2].length]); }
+    }
+  }
+  ranges.sort((a, b) => a[0] - b[0]);
+  const merged = [];
+  for (const r of ranges) { const l = merged[merged.length - 1]; if (l && r[0] <= l[1]) l[1] = Math.max(l[1], r[1]); else merged.push(r.slice()); }
+  return merged;
+}
+/*END*/
+
+const $ = id => document.getElementById(id);
+const PAGE = 20;
+let BOOKS = [], shown = PAGE, current = [], toks = [];
+
+function render(){
+  const list = $("list"); list.textContent = "";
+  current.slice(0, shown).forEach(b => {
+    const li = document.createElement("li");
+    const t = document.createElement("span"); t.className = "t";
+    let pos = 0;
+    for (const [s, e] of highlightRanges(b.t, toks)) {
+      if (s > pos) t.append(document.createTextNode(b.t.slice(pos, s)));
+      const mk = document.createElement("mark"); mk.textContent = b.t.slice(s, e); t.append(mk); pos = e;
+    }
+    if (pos < b.t.length) t.append(document.createTextNode(b.t.slice(pos)));
+    const p = document.createElement("span"); p.className = "p"; p.textContent = "\u00a3" + b.p.toFixed(2);
+    li.append(t, p); list.append(li);
+  });
+  $("more").hidden = current.length <= shown;
+  $("more").textContent = "Tampilkan lebih banyak (" + Math.min(PAGE, current.length - shown) + " lagi)";
+}
+
+function search(){
+  const raw = $("q").value.trim();
+  toks = parseQuery(raw); shown = PAGE;
+  const sort = $("sort").value;
+  if (!toks.length) { current = BOOKS.slice(); $("count").textContent = BOOKS.length + " buku"; }
+  else {
+    current = BOOKS.map(b => ({ ...b, s: scoreBook(b.t, toks) })).filter(b => b.s > 0);
+    current.sort((a, b) => b.s - a.s || a.t.localeCompare(b.t));
+    $("count").textContent = current.length + " hasil";
+  }
+  if (sort === "asc") current.sort((a, b) => a.p - b.p);
+  if (sort === "desc") current.sort((a, b) => b.p - a.p);
+  const empty = toks.length && !current.length;
+  $("empty").hidden = !empty;
+  if (empty) $("empty").textContent = "Tidak ada hasil untuk \"" + raw + "\". Coba kata lain atau kurangi kata kunci.";
+  $("chips").hidden = !!toks.length;
+  render();
+  try { const u = new URL(location.href); raw ? u.searchParams.set("q", raw) : u.searchParams.delete("q"); history.replaceState(null, "", u); } catch (e) {}
+}
+
+let timer;
+$("q").addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(search, 150); });
+$("sort").addEventListener("change", search);
+$("more").addEventListener("click", () => { shown += PAGE; render(); });
+$("clear").addEventListener("click", () => { $("q").value = ""; search(); $("q").focus(); });
+
+["love", "history", "Lig*", "\"light in\"", "love OR war"].slice(0, 4).forEach(w => {
+  const c = document.createElement("button"); c.type = "button"; c.className = "chip"; c.textContent = w;
+  c.addEventListener("click", () => { $("q").value = w; search(); });
+  $("chips").append(c);
+});
+
+fetch("books.json").then(r => r.json()).then(d => {
+  BOOKS = d;
+  const q = new URLSearchParams(location.search).get("q");
+  if (q) $("q").value = q;
+  search();
+}).catch(() => { $("empty").hidden = false; $("empty").textContent = "Data buku gagal dimuat. Pastikan file books.json ada di folder yang sama."; });
+</script>
+</body>
+</html>
